@@ -14,7 +14,9 @@ public class Administrator extends User{
 		System.out.print("Please input the name:");
 		Scanner input = new Scanner(System.in);
 		userName = input.next();
+		System.out.print("\nPlease input the password:");
 		userPassword = input.next();
+		System.out.print("\nPlease input the role:");
 		userRole = input.next();
 		if(DataProcessing.update(userName, userPassword, userRole)) {
 			System.out.println(userName +" has been update");
@@ -59,7 +61,7 @@ public class Administrator extends User{
 		Enumeration<User> e = DataProcessing.getAllUser();
 		while(e.hasMoreElements()){
 			User user = e.nextElement();
-	         System.out.println(user.getName()+"\t"+user.getRole());
+	        System.out.println(user.getName()+"\t"+user.getRole());
 	     }
 	}
 	public void showMenu() {
