@@ -1,3 +1,11 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Operator extends User{
@@ -8,9 +16,32 @@ public class Operator extends User{
 	}
 	public void uploadFile() {
 		String file;
+		String path = "C:\\filedata";
 		System.out.print("请输入上传文件:");
 		Scanner input = new Scanner(System.in);
 		file = input.next();
+		File upfile = new File(file);
+		try {
+			new File(path +"\\" +upfile.getName()).createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		File edfile = new File(path +"\\" +upfile.getName());
+		System.out.println(upfile.getAbsolutePath());
+		System.out.println(edfile.getAbsolutePath());
+		try {
+			BufferedInputStream is = new BufferedInputStream(new FileInputStream(upfile));
+			BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(edfile));
+			int b;
+			while((b = is.read()) != -1)
+				os.write(b);
+			is.close();
+			os.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(file+"上传成功!");
 	}
 	public void showMenu() {

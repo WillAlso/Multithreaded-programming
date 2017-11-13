@@ -19,11 +19,11 @@ public class FileMange {
 			try {
 				user = DataProcessing.search(name, password);
 			} catch (IllegalStateException e) {
-				e.printStackTrace();
+				System.out.println("Not Connected to Database");
 				continue;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Error in excecuting Query");
 				continue;
 			}
 			if(user == null) {
