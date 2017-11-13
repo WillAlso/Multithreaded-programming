@@ -8,28 +8,32 @@ public class FileMange {
 		Console con = System.console();
 		Scanner in = new Scanner(System.in);
 		do {
-			System.out.println("Wecome!\nPlease input your name:");
+			System.out.print("请输入用户姓名:");
 			name = in.next();
 			//name = con.readLine();
-			System.out.println("\nPlease input your password:");
+			System.out.print("\n请输入用户密码:");
 			password = in.next();
 			//password = String.valueOf(con.readPassword());
-		}while(DataProcessing.search(name, password) == null);
-		User user = DataProcessing.search(name, password);
-		switch(user.getRole()) {
-		case "Administrator":
-			user = new Administrator(name,password,user.getRole());
-			user.showMenu();
-			break;
-		case "Operator":
-			user = new Operator(name,password,user.getRole());
-			user.showMenu();
-			break;
-		case "Browser":
-			user = new Browser(name,password,user.getRole());
-			user.showMenu();
-			break;
-		}
+			if(DataProcessing.search(name, password) == null) {
+				System.out.println("用户不存在！");
+				continue;
+			}
+			User user = DataProcessing.search(name, password);
+			switch(user.getRole()) {
+			case "administrator":
+				user = new Administrator(name,password,user.getRole());
+				user.showMenu();
+				break;
+			case "operator":
+				user = new Operator(name,password,user.getRole());
+				user.showMenu();
+				break;
+			case "browser":
+				user = new Browser(name,password,user.getRole());
+				user.showMenu();
+				break;
+			}
+		}while(true);
 	}
 	
 }

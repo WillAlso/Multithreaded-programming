@@ -8,14 +8,14 @@ public class Operator extends User{
 	}
 	public void uploadFile() {
 		String file;
-		System.out.print("Please the file's name:");
+		System.out.print("请输入上传文件:");
 		Scanner input = new Scanner(System.in);
 		file = input.next();
-		System.out.println(file+"has been upload!");
+		System.out.println(file+"上传成功!");
 	}
 	public void showMenu() {
 		System.out.println("The Operator's Menu:");
-		System.out.println("1,showFilelist\n2,downloadFile\n3,uploadFile\n4,showMenu\n5,exitSystem");
+		System.out.println("1,文件列表\n2,下载文件\n3,上传文件\n4,显示菜单\n5,更改信息\n6,退出登录");
 		Scanner input = new Scanner(System.in);
 		String c;
 		while(true) {
@@ -30,7 +30,10 @@ public class Operator extends User{
 		case "4":
 			showMenu();break;
 		case "5":
-			exitSystem();break;
+			changeSelfInfo();break;
+		case "6":
+			//exitSystem();break;
+			return;
 		}
 		}
 	}

@@ -6,18 +6,38 @@ public class User {
 	private String role;
 	public void showMenu() {}
 	public void showFilelist() {
-		System.out.println("The file list:");
+		System.out.println("文件列表:");
 	}
 	public void downloadFile() {
 		String file;
-		System.out.print("Please the file's name:");
+		System.out.print("请输入文件名字:");
 		Scanner input = new Scanner(System.in);
 		file = input.next();
-		System.out.println(file+" has been downloaded!");
+		System.out.println(file+"下载成功!");
 	}
-	public void changeSelfInfo() {}
+	public void changeSelfInfo() {
+		String userName;
+		String userPassword;
+		userName = getName();
+		Scanner input = new Scanner(System.in);
+		System.out.print("\n请输入用户旧密码:");
+		userPassword = input.next();
+		if(!userPassword.equals(getPassword())) {
+			System.out.println("密码错误!");
+			return;
+		}
+		System.out.print("\n请输入用户新密码:");
+		userPassword = input.next();
+		if(DataProcessing.update(userName, userPassword, getRole())) {
+			System.out.println(userName +" 信息更新成功 !");
+		}
+		else {
+			System.out.println(userName +"信息更新失败!");
+			return;
+		}
+	}
 	public void exitSystem() {
-		System.out.println("You has exit system!");
+		System.out.println(getName() + "已退出系统!");
 		System.exit(0);
 	}
 	public void setName(String name){

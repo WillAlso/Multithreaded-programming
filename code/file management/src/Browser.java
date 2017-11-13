@@ -8,7 +8,7 @@ public class Browser extends User{
 	}
 	public void showMenu() {
 		System.out.println("The Browser's Menu:");
-		System.out.println("1,showFilelist\n2,downloadFile\n3,showMenu\n4,exitSystem");
+		System.out.println("1,文件列表\n2,下载文件\n3,显示菜单\n4,更改信息\n5,退出登录");
 		Scanner input = new Scanner(System.in);
 		String c;
 		while(true) {
@@ -21,7 +21,10 @@ public class Browser extends User{
 		case "3":
 			showMenu();break;
 		case "4":
-			exitSystem();break;
+			changeSelfInfo();break;
+		case "5":
+			//exitSystem();break;
+			return;
 		}	
 		}
 	}

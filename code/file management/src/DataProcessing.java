@@ -6,9 +6,9 @@ public  class DataProcessing {
 
 	static {
 		users = new Hashtable<String, User>();
-		users.put("jack", new Operator("jack","123","Operator"));
-		users.put("rose", new Browser("rose","123","Browser"));
-		users.put("kate", new Administrator("kate","123","Administrator"));		
+		users.put("jack", new Operator("jack","123","operator"));
+		users.put("rose", new Browser("rose","123","browser"));
+		users.put("kate", new Administrator("kate","123","administrator"));		
 	}
 	
 	public static User search(String name, String password){
