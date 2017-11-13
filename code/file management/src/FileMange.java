@@ -1,4 +1,5 @@
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 
 public class FileMange {
@@ -14,11 +15,21 @@ public class FileMange {
 			System.out.print("\n请输入用户密码:");
 			password = in.next();
 			//password = String.valueOf(con.readPassword());
-			if(DataProcessing.search(name, password) == null) {
+			User user;
+			try {
+				user = DataProcessing.search(name, password);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+				continue;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				continue;
+			}
+			if(user == null) {
 				System.out.println("用户不存在！");
 				continue;
 			}
-			User user = DataProcessing.search(name, password);
 			switch(user.getRole()) {
 			case "administrator":
 				user = new Administrator(name,password,user.getRole());

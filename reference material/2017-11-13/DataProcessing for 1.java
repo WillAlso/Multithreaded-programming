@@ -1,5 +1,7 @@
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.sql.*;
+
 
 
 public  class DataProcessing {
@@ -10,6 +12,7 @@ public  class DataProcessing {
 	private static boolean connectToDB=false;
 	
 	static Hashtable<String, User> users;
+	static Hashtable<String, Doc> docs;
 
 	static {
 		users = new Hashtable<String, User>();
@@ -17,6 +20,12 @@ public  class DataProcessing {
 		users.put("rose", new Browser("rose","123","browser"));
 		users.put("kate", new Administrator("kate","123","administrator"));
 		Init();
+		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
+		docs = new Hashtable<String,Doc>();
+		docs.put("0001",new Doc("0001","jack",timestamp,"Age Source Java","Age.java"));
+		
+		
 	}
 	
 	public static  void Init(){
@@ -27,22 +36,46 @@ public  class DataProcessing {
 		//st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY );
 
 		// update database connection status
-		if (Math.random()>0.3)
-			connectToDB = true;
-		else
-			connectToDB = false;
-		
+//		if (Math.random()>0.3)
+//			connectToDB = true;
+//		else
+//			connectToDB = false;
 	}
 	
+	public static Doc searchDoc(String ID) throws SQLException,IllegalStateException {
+		if (docs.containsKey(ID)) {
+			Doc temp =docs.get(ID);
+			return temp;
+		}
+		return null;
+	}
 	
-	public static User search(String name, String password) throws SQLException,IllegalStateException {
-		if ( !connectToDB ) 
-	        throw new IllegalStateException( "Not Connected to Database" );
-
-		
-		if (Math.random()>0.7)
-			throw new SQLException( "Error in excecuting Query" );
-		
+	public static Enumeration<Doc> getAllDocs() throws SQLException,IllegalStateException{		
+		Enumeration<Doc> e  = docs.elements();
+		return e;
+	} 
+	
+	public static boolean insertDoc(String ID, String creator, Timestamp timestamp, String description, String filename) throws SQLException,IllegalStateException{
+		Doc doc;		
+	
+		if (docs.containsKey(ID))
+			return false;
+		else{
+			doc = new Doc(ID,creator,timestamp,description,filename);
+			docs.put(ID, doc);
+			return true;
+		}
+	} 
+	
+	
+	public static User searchUser(String name, String password) throws SQLException,IllegalStateException {
+//		if ( !connectToDB ) 
+//	        throw new IllegalStateException( "Not Connected to Database" );
+//
+//		
+//		if (Math.random()>0.7)
+//			throw new SQLException( "Error in excecuting Query" );
+//		
 		if (users.containsKey(name)) {
 			User temp =users.get(name);
 			if ((temp.getPassword()).equals(password))
@@ -52,11 +85,11 @@ public  class DataProcessing {
 	}
 	
 	public static Enumeration<User> getAllUser() throws SQLException,IllegalStateException{
-		if ( !connectToDB ) 
-	        throw new IllegalStateException( "Not Connected to Database" );
-		
-		if (Math.random()>0.7)
-			throw new SQLException( "Error in excecuting Query" );
+//		if ( !connectToDB ) 
+//	        throw new IllegalStateException( "Not Connected to Database" );
+//		
+//		if (Math.random()>0.7)
+//			throw new SQLException( "Error in excecuting Query" );
 		
 		Enumeration<User> e  = users.elements();
 		return e;
@@ -64,13 +97,13 @@ public  class DataProcessing {
 	
 	
 	
-	public static boolean update(String name, String password, String role) throws SQLException,IllegalStateException{
+	public static boolean updateUser(String name, String password, String role) throws SQLException,IllegalStateException{
 		User user;
-		if ( !connectToDB ) 
-	        throw new IllegalStateException( "Not Connected to Database" );
-		
-		if (Math.random()>0.7)
-			throw new SQLException( "Error in excecuting Update" );
+//		if ( !connectToDB ) 
+//	        throw new IllegalStateException( "Not Connected to Database" );
+//		
+//		if (Math.random()>0.7)
+//			throw new SQLException( "Error in excecuting Update" );
 		
 		if (users.containsKey(name)) {
 			if (role.equalsIgnoreCase("administrator"))
@@ -85,14 +118,14 @@ public  class DataProcessing {
 			return false;
 	}
 	
-	public static boolean insert(String name, String password, String role) throws SQLException,IllegalStateException{
+	public static boolean insertUser(String name, String password, String role) throws SQLException,IllegalStateException{
 		User user;
 		
-		if ( !connectToDB ) 
-	        throw new IllegalStateException( "Not Connected to Database" );
-		
-		if (Math.random()>0.7)
-			throw new SQLException( "Error in excecuting Insert" );
+//		if ( !connectToDB ) 
+//	        throw new IllegalStateException( "Not Connected to Database" );
+//		
+//		if (Math.random()>0.7)
+//			throw new SQLException( "Error in excecuting Insert" );
 		
 		if (users.containsKey(name))
 			return false;
@@ -108,12 +141,12 @@ public  class DataProcessing {
 		}
 	}
 	
-	public static boolean delete(String name) throws SQLException,IllegalStateException{
-		if ( !connectToDB ) 
-	        throw new IllegalStateException( "Not Connected to Database" );
-		
-		if (Math.random()>0.7)
-			throw new SQLException( "Error in excecuting Delete" );
+	public static boolean deleteUser(String name) throws SQLException,IllegalStateException{
+//		if ( !connectToDB ) 
+//	        throw new IllegalStateException( "Not Connected to Database" );
+//		
+//		if (Math.random()>0.7)
+//			throw new SQLException( "Error in excecuting Delete" );
 		
 		if (users.containsKey(name)){
 			users.remove(name);

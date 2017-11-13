@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Scanner;
 
@@ -29,7 +30,19 @@ public class Administrator extends User{
 				System.out.println("Error!");
 				return;
 		}
-		if(DataProcessing.update(userName, userPassword, userRole)) {
+		boolean flag;
+		try {
+			flag = DataProcessing.update(userName, userPassword, userRole);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		if(flag) {
 			System.out.println(userName +" 信息更新成功 !");
 		}
 		else {
@@ -42,7 +55,19 @@ public class Administrator extends User{
 			System.out.print("请输入用户密码:");
 			Scanner input = new Scanner(System.in);
 			userName = input.next();
-			if(DataProcessing.delete(userName)) {
+			boolean flag;
+			try {
+				flag = DataProcessing.delete(userName);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
+			if(flag) {
 				System.out.println(userName +"删除成功");
 			}
 			else {
@@ -61,7 +86,19 @@ public class Administrator extends User{
 		userPassword = input.next();
 		System.out.print("\n请选择用户类型:");
 		userRole = input.next();
-		if(DataProcessing.insert(userName, userPassword, userRole)) {
+		boolean flag;
+		try {
+			flag = DataProcessing.insert(userName, userPassword, userRole);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		if(flag) {
 			System.out.println(userName + "添加成功!");
 		}
 		else {
@@ -69,7 +106,18 @@ public class Administrator extends User{
 		}
 	}
 	public void listUser() {
-		Enumeration<User> e = DataProcessing.getAllUser();
+		Enumeration<User> e;
+		try {
+			e = DataProcessing.getAllUser();
+		} catch (IllegalStateException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		}
 		while(e.hasMoreElements()){
 			User user = e.nextElement();
 	        System.out.println(user.getName()+"\t"+user.getRole());

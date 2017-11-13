@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class User {
@@ -28,7 +29,19 @@ public class User {
 		}
 		System.out.print("\n请输入用户新密码:");
 		userPassword = input.next();
-		if(DataProcessing.update(userName, userPassword, getRole())) {
+		boolean flag;
+		try {
+			flag = DataProcessing.update(userName, userPassword, getRole());
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		if(flag) {
 			System.out.println(userName +" 信息更新成功 !");
 		}
 		else {
