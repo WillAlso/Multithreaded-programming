@@ -9,25 +9,22 @@ public class FileMange {
 		Console con = System.console();
 		Scanner in = new Scanner(System.in);
 		do {
-			if(con != null) {
-				name = con.readLine("请输入用户姓名:");
-				password = new String(con.readPassword("请输入用户密码:"));
-			}
-			else {
-				System.out.print("请输入用户姓名:");
-				name = in.next();
-				System.out.print("\n请输入用户密码:");
-				password = in.next();
-			}
+			System.out.print("请输入用户姓名:");
+			name = in.next();
+			//name = con.readLine();
+			System.out.print("\n请输入用户密码:");
+			password = in.next();
+			//password = String.valueOf(con.readPassword());
 			User user;
 			try {
 				user = DataProcessing.search(name, password);
 			} catch (IllegalStateException e) {
 				System.out.println("Not Connected to Database");
-				return;
+				continue;
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				System.out.println("Error in excecuting Query");
-				return;
+				continue;
 			}
 			if(user == null) {
 				System.out.println("用户不存在！");

@@ -18,8 +18,96 @@ public class User {
 	private String password;
 	private String role;
 	public void showMenu() {}
-	public void showFilelist() {}
-	public void downloadFile() {}
+	public void showFilelist() {
+		System.out.println("文件列表:");
+		String path = "C:\\filedata";
+		File filefolder = new File(path);
+		if(!filefolder.exists()) {
+			System.out.println("文件夹不存在!");
+			return;
+		}
+		System.out.println("编号\t文件\t文件名\t大小\t时间");
+		SimpleDateFormat sdf= new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
+		File file[] = filefolder.listFiles();
+		int cnt = 1;
+		for(File f:file) {
+			if(f.isDirectory()) {
+				System.out.print((cnt++) +"\t[Floder]" + f.getName()+ '\t' +f.length()+"bytes\t");
+				Date dt = new Date(f.lastModified());
+				String sDateTime = sdf.format(dt);
+				System.out.println(sDateTime);
+			}
+			else {
+				System.out.print((cnt++) + "\t[File]\t" + f.getName() + '\t' + f.length()+"bytes\t");
+				Date dt = new Date(f.lastModified());
+				String sDateTime = sdf.format(dt);
+				System.out.println(sDateTime);
+			}
+		}
+	}
+	public void downloadFile() {
+		showFilelist();
+		Map map = new HashMap();
+		String path = "C:\\filedata";
+		String downloadpath = "C:\\Users\\Administrator\\Downloads";
+		System.out.print("请输入文件编号:");
+		Scanner input = new Scanner(System.in);
+		File[] file = (new File(path)).listFiles();
+		int cnt = 1;
+		for(File f:file) {
+			map.put(cnt++, f.getName());
+		}
+		int chice = input.nextInt();
+		String filename = map.get(chice).toString();
+		File downfile = new File(path + "\\"+filename);
+		try {
+			new File(downloadpath +"\\" +filename).createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		File savefile = new File(downloadpath +"\\" +filename);
+		
+		System.out.println(downfile.getAbsolutePath());
+		System.out.println(savefile.getAbsolutePath());
+		try {
+			BufferedInputStream is = new BufferedInputStream(new FileInputStream(downfile));
+			BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(savefile));
+			int b;
+			while((b = is.read()) != -1)
+				os.write(b);
+			is.close();
+			os.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
+		 * int length=2097152;
+		try {
+			FileInputStream in=new FileInputStream(downfile);
+			FileOutputStream out=new FileOutputStream(savefile);
+			byte[] buffer=new byte[length];
+			while(true){
+				int ins=in.read(buffer);
+				if(ins==-1){
+					in.close();
+					out.flush();
+					out.close();
+				}else
+					out.write(buffer,0,ins);
+				}
+		}catch (Exception e) {
+			//in.close();
+			//out.close();
+			e.printStackTrace();
+			System.out.println(filename+"下载失败!");
+			return;
+		}
+		*/
+		//System.out.println(filename+"下载成功!");
+	}
 	public void changeSelfInfo() {
 		String userName;
 		String userPassword;
@@ -37,10 +125,12 @@ public class User {
 		try {
 			flag = DataProcessing.update(userName, userPassword, getRole());
 		} catch (IllegalStateException e) {
-			System.out.println("Not Connected to Database");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return;
 		} catch (SQLException e) {
-			System.out.println("Error in excecuting Query");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return;
 		}
 		if(flag) {

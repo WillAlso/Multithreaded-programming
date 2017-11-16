@@ -14,7 +14,36 @@ public class Operator extends User{
 		setPassword(password);
 		setRole(role);
 	}
-	public void uploadFile() {}
+	public void uploadFile() {
+		String file;
+		String path = "C:\\filedata";
+		System.out.print("请输入上传文件:");
+		Scanner input = new Scanner(System.in);
+		file = input.next();
+		File upfile = new File(file);
+		try {
+			new File(path +"\\" +upfile.getName()).createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		File edfile = new File(path +"\\" +upfile.getName());
+		System.out.println(upfile.getAbsolutePath());
+		System.out.println(edfile.getAbsolutePath());
+		try {
+			BufferedInputStream is = new BufferedInputStream(new FileInputStream(upfile));
+			BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(edfile));
+			int b;
+			while((b = is.read()) != -1)
+				os.write(b);
+			is.close();
+			os.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(file+"上传成功!");
+	}
 	public void showMenu() {
 		System.out.println("The Operator's Menu:");
 		System.out.println("1,文件列表\n2,下载文件\n3,上传文件\n4,显示菜单\n5,更改信息\n6,退出登录");
@@ -36,10 +65,6 @@ public class Operator extends User{
 		case "6":
 			//exitSystem();break;
 			return;
-		default:
-			System.out.println("输入选项有误!请重新输入:");
-			showMenu();
-			continue;
 		}
 		}
 	}
