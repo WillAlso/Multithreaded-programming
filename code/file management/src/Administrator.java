@@ -34,8 +34,7 @@ public class Administrator extends User{
 		try {
 			flag = DataProcessing.update(userName, userPassword, userRole);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Not Connected to Database");
 			return;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -59,11 +58,9 @@ public class Administrator extends User{
 			try {
 				flag = DataProcessing.delete(userName);
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return;
 			}
@@ -90,8 +87,7 @@ public class Administrator extends User{
 		try {
 			flag = DataProcessing.insert(userName, userPassword, userRole);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Not Connected to Database");
 			return;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -110,8 +106,7 @@ public class Administrator extends User{
 		try {
 			e = DataProcessing.getAllUser();
 		} catch (IllegalStateException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println("Not Connected to Database");
 			return;
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -149,6 +144,10 @@ public class Administrator extends User{
 		case "8":
 			//exitSystem();break;
 			return;
+		default:
+			System.out.println("输入选项有误!请重新输入:");
+			showMenu();
+			continue;
 		}		
 		}
 	}

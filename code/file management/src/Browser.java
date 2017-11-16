@@ -25,6 +25,10 @@ public class Browser extends User{
 		case "5":
 			//exitSystem();break;
 			return;
+		default:
+			System.out.println("输入选项有误!请重新输入:");
+			showMenu();
+			continue;
 		}	
 		}
 	}
