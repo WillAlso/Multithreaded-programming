@@ -1,39 +1,50 @@
-import java.io.*;
+ï»¿import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 
 public class FileMange {
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		String name;
 		String password;
 		Console con = System.console();
 		Scanner in = new Scanner(System.in);
-		do {
-			System.out.print("ÇëÊäÈëÓÃ»§ĞÕÃû:");
-			name = in.next();
-			//name = con.readLine();
-			System.out.print("\nÇëÊäÈëÓÃ»§ÃÜÂë:");
-			password = in.next();
-			//password = String.valueOf(con.readPassword());
-			if(DataProcessing.search(name, password) == null) {
-				System.out.println("ÓÃ»§²»´æÔÚ£¡");
-				continue;
-			}
-			User user = DataProcessing.search(name, password);
-			switch(user.getRole()) {
-			case "administrator":
-				user = new Administrator(name,password,user.getRole());
-				user.showMenu();
-				break;
-			case "operator":
-				user = new Operator(name,password,user.getRole());
-				user.showMenu();
-				break;
-			case "browser":
-				user = new Browser(name,password,user.getRole());
-				user.showMenu();
-				break;
-			}
-		}while(true);
+		try {
+			do {
+				if(con != null) {
+					name = con.readLine("è¯·è¾“å…¥ç”¨æˆ·å§“å:");
+					password = new String(con.readPassword("è¯·è¾“å…¥ç”¨æˆ·å¯†ç :"));
+				}
+				else {
+					System.out.print("è¯·è¾“å…¥ç”¨æˆ·å§“å:");
+					name = in.next();
+					System.out.print("\nè¯·è¾“å…¥ç”¨æˆ·å¯†ç :");
+					password = in.next();
+				}
+				User user = DataProcessing.searchUser(name, password);
+				if(user == null) {
+					System.out.println("ç”¨æˆ·ä¸å­˜åœ¨ï¼");
+					continue;
+				}
+				switch(user.getRole()) {
+				case "administrator":
+					user = new Administrator(name,password,user.getRole());
+					user.showMenu();
+					break;
+				case "operator":
+					user = new Operator(name,password,user.getRole());
+					user.showMenu();
+					break;
+				case "browser":
+					user = new Browser(name,password,user.getRole());
+					user.showMenu();
+					break;
+				}
+			}while(true);
+		}catch(SQLException b) {
+			System.out.println("Not Connected to Database");
+		}catch(IllegalStateException e) {
+			System.out.println("Error in excecuting Query");
+		}
 	}
 	
 }

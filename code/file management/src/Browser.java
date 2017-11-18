@@ -1,3 +1,4 @@
+ï»¿import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Browser extends User{
@@ -6,9 +7,9 @@ public class Browser extends User{
 		setPassword(password);
 		setRole(role);
 	}
-	public void showMenu() {
+	public void showMenu() throws IllegalStateException, SQLException {
 		System.out.println("The Browser's Menu:");
-		System.out.println("1,ÎÄ¼şÁĞ±í\n2,ÏÂÔØÎÄ¼ş\n3,ÏÔÊ¾²Ëµ¥\n4,¸ü¸ÄĞÅÏ¢\n5,ÍË³öµÇÂ¼");
+		System.out.println("1,æ–‡ä»¶åˆ—è¡¨\n2,ä¸‹è½½æ–‡ä»¶\n3,æ˜¾ç¤ºèœå•\n4,æ›´æ”¹ä¿¡æ¯\n5,é€€å‡ºç™»å½•");
 		Scanner input = new Scanner(System.in);
 		String c;
 		while(true) {

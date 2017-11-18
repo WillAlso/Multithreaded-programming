@@ -1,3 +1,4 @@
+ï»¿import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Scanner;
 
@@ -7,16 +8,16 @@ public class Administrator extends User{
 		setPassword(password);
 		setRole(role);
 	}
-	public void changeUserInfo() {
+	public void changeUserInfo() throws IllegalStateException, SQLException {
 		String userName;
 		String userPassword;
 		String userRole;
-		System.out.print("ÇëÊäÈëÓÃ»§ĞÕÃû:");
+		System.out.print("è¯·è¾“å…¥ç”¨æˆ·å§“å:");
 		Scanner input = new Scanner(System.in);
 		userName = input.next();
-		System.out.print("\nÇëÊäÈëÓÃ»§ĞÂÃÜÂë:");
+		System.out.print("\nè¯·è¾“å…¥ç”¨æˆ·æ–°å¯†ç :");
 		userPassword = input.next();
-		System.out.println("\nÇëÑ¡ÔñÓÃ»§ÀàĞÍ:\n1,Administrator\n2,Operator\n3,Browser");
+		System.out.println("\nè¯·é€‰æ‹©ç”¨æˆ·ç±»å‹:\n1,Administrator\n2,Operator\n3,Browser");
 		int c = input.nextInt();
 		switch(c) {
 		case 1:
@@ -29,56 +30,60 @@ public class Administrator extends User{
 				System.out.println("Error!");
 				return;
 		}
-		if(DataProcessing.update(userName, userPassword, userRole)) {
-			System.out.println(userName +" ĞÅÏ¢¸üĞÂ³É¹¦ !");
+		if(DataProcessing.updateUser(userName, userPassword, userRole)) {
+			System.out.println(userName +" ä¿¡æ¯æ›´æ–°æˆåŠŸ !");
 		}
 		else {
-			System.out.println(userName +"ĞÅÏ¢¸üĞÂÊ§°Ü!");
+			System.out.println(userName +"ä¿¡æ¯æ›´æ–°å¤±è´¥!");
 			return;
 		}
 	}
-	public void deUser() {
+	public void deUser() throws IllegalStateException, SQLException {
 			String userName;
-			System.out.print("ÇëÊäÈëÓÃ»§ÃÜÂë:");
+			System.out.print("è¯·è¾“å…¥ç”¨æˆ·å¯†ç :");
 			Scanner input = new Scanner(System.in);
 			userName = input.next();
-			if(DataProcessing.delete(userName)) {
-				System.out.println(userName +"É¾³ı³É¹¦");
+			if(getName().equals(userName)) {
+				System.out.println("ä¸èƒ½åˆ é™¤è‡ªå·±");
+				return;
+			}
+			if(DataProcessing.deleteUser(userName)) {
+				System.out.println(userName +"åˆ é™¤æˆåŠŸ");
 			}
 			else {
-				System.out.println(userName + "É¾³ıÊ§°Ü!");
+				System.out.println(userName + "åˆ é™¤å¤±è´¥!");
 				return;
 			}
 	}
-	public void addUser() {
+	public void addUser() throws IllegalStateException, SQLException {
 		String userName;
 		String userPassword;
 		String userRole;
-		System.out.print("ÇëÊäÈëÓÃ»§ĞÕÃû:");
+		System.out.print("è¯·è¾“å…¥ç”¨æˆ·å§“å:");
 		Scanner input = new Scanner(System.in);
 		userName = input.next();
-		System.out.print("\nÇëÊäÈëÓÃ»§ÃÜÂë:");
+		System.out.print("\nè¯·è¾“å…¥ç”¨æˆ·å¯†ç :");
 		userPassword = input.next();
-		System.out.print("\nÇëÑ¡ÔñÓÃ»§ÀàĞÍ:");
+		System.out.print("\nè¯·é€‰æ‹©ç”¨æˆ·ç±»å‹:");
 		userRole = input.next();
-		if(DataProcessing.insert(userName, userPassword, userRole)) {
-			System.out.println(userName + "Ìí¼Ó³É¹¦!");
+		if(DataProcessing.insertUser(userName, userPassword, userRole)) {
+			System.out.println(userName + "æ·»åŠ æˆåŠŸ!");
 		}
 		else {
-			System.out.println(userName + "Ìí¼ÓÊ§°Ü!");
+			System.out.println(userName + "æ·»åŠ å¤±è´¥!");
 		}
 	}
-	public void listUser() {
+	public void listUser() throws IllegalStateException, SQLException {
 		Enumeration<User> e = DataProcessing.getAllUser();
 		while(e.hasMoreElements()){
 			User user = e.nextElement();
 	        System.out.println(user.getName()+"\t"+user.getRole());
 	     }
 	}
-	public void showMenu() {
+	public void showMenu() throws IllegalStateException, SQLException {
 		System.out.println("The Administrator's Menu:");
-		System.out.println("1,ÎÄ¼şÁĞ±í\n2,ÏÂÔØÎÄ¼ş\n3,¸Ä±äÓÃ»§ĞÅÏ¢\n"
-				+ "4,É¾³ıÓÃ»§\n5,Ìí¼ÓÓÃ»§\n6,ÓÃ»§ÁĞ±í\n7,ÏÔÊ¾²Ëµ¥\n8,ÍË³öµÇÂ¼");
+		System.out.println("1,æ–‡ä»¶åˆ—è¡¨\n2,ä¸‹è½½æ–‡ä»¶\n3,æ”¹å˜ç”¨æˆ·ä¿¡æ¯\n"
+				+ "4,åˆ é™¤ç”¨æˆ·\n5,æ·»åŠ ç”¨æˆ·\n6,ç”¨æˆ·åˆ—è¡¨\n7,æ˜¾ç¤ºèœå•\n8,é€€å‡ºç™»å½•");
 		String c;
 		Scanner input = new Scanner(System.in);
 		while(true) {

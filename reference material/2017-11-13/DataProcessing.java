@@ -1,7 +1,5 @@
-﻿import java.util.Enumeration;
+import java.util.Enumeration;
 import java.util.Hashtable;
-
-
 import java.sql.*;
 
 
@@ -26,7 +24,8 @@ public  class DataProcessing {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 		docs = new Hashtable<String,Doc>();
 		docs.put("0001",new Doc("0001","jack",timestamp,"Age Source Java","Age.java"));
-			
+		
+		
 	}
 	
 	public static  void Init(){

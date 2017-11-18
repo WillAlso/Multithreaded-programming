@@ -1,43 +1,96 @@
+ï»¿import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.sql.SQLException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class User {
 	private String name;
 	private String password;
 	private String role;
-	public void showMenu() {}
-	public void showFilelist() {
-		System.out.println("ÎÄ¼şÁĞ±í:");
+	public void showMenu() throws IllegalStateException, SQLException {}
+	public void showFilelist() throws IllegalStateException, SQLException {
+		Enumeration<Doc> e = DataProcessing.getAllDocs();
+		System.out.println("ç¼–å·\tæ‰€æœ‰è€…\tæ—¶é—´\t\t\tæè¿°\t\tæ–‡ä»¶å");
+		while(e.hasMoreElements()){
+			Doc user = e.nextElement();
+	        System.out.println(user.getNumber()+"\t"+user.getOwner()+"\t"+user.getTimestamp()+"\t"+user.getDescription()+"\t"+user.getPath());
+	     }
 	}
-	public void downloadFile() {
-		String file;
-		System.out.print("ÇëÊäÈëÎÄ¼şÃû×Ö:");
+	public void downloadFile() throws IllegalStateException, SQLException {
+		String num;
+		String sourcepath = "C:\\sql";
+		String downloadpath;
+		System.out.print("è¯·è¾“å…¥ä¸‹è½½æ–‡ä»¶ç¼–å·:");
 		Scanner input = new Scanner(System.in);
-		file = input.next();
-		System.out.println(file+"ÏÂÔØ³É¹¦!");
+		num = input.next();
+		Doc doc = DataProcessing.searchDoc(num);
+		if(doc != null) {
+			File sourcefile = new File(sourcepath+doc.getPath());
+			System.out.println("è¯·é€‰æ‹©ä¸‹è½½ç›®å½•");
+			downloadpath = chooseFolder("C:\\");
+			File fin = new File(sourcepath+"\\"+doc.getPath());
+			File fout = new File(downloadpath+"\\"+doc.getPath());
+			FileInputStream is;
+			FileOutputStream os;
+			double len = (double)(fin.length())/50;
+			System.out.println(len);
+			double cnt = 0;
+			for(int m = 0;m < 50;m++) {
+				System.out.print("-");
+			}
+			System.out.println();
+			try {
+				is = new FileInputStream(fin);
+				os = new FileOutputStream(fout);
+				int b;
+				while((b=is.read()) != -1){
+					os.write(b);
+					cnt++;
+					while(cnt>=len) {
+						cnt -= len;
+						System.out.print("-");
+					}
+				}
+				is.close();
+				os.close();		
+				System.out.println(doc.getPath()+"ä¸‹è½½æˆåŠŸ!\n");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("æ–‡ä»¶æ“ä½œé”™è¯¯!\n");
+				return;
+			}
+		}
+		else
+			System.out.println(doc.getPath()+"ä¸‹è½½å¤±è´¥!");
 	}
-	public void changeSelfInfo() {
+	public void changeSelfInfo() throws IllegalStateException, SQLException {
 		String userName;
 		String userPassword;
 		userName = getName();
 		Scanner input = new Scanner(System.in);
-		System.out.print("\nÇëÊäÈëÓÃ»§¾ÉÃÜÂë:");
+		System.out.print("\nè¯·è¾“å…¥ç”¨æˆ·æ—§å¯†ç :");
 		userPassword = input.next();
 		if(!userPassword.equals(getPassword())) {
-			System.out.println("ÃÜÂë´íÎó!");
+			System.out.println("å¯†ç é”™è¯¯!");
 			return;
 		}
-		System.out.print("\nÇëÊäÈëÓÃ»§ĞÂÃÜÂë:");
+		System.out.print("\nè¯·è¾“å…¥ç”¨æˆ·æ–°å¯†ç :");
 		userPassword = input.next();
-		if(DataProcessing.update(userName, userPassword, getRole())) {
-			System.out.println(userName +" ĞÅÏ¢¸üĞÂ³É¹¦ !");
+		if(DataProcessing.updateUser(userName, userPassword, getRole())) {
+			System.out.println(userName +" ä¿¡æ¯æ›´æ–°æˆåŠŸ !");
 		}
 		else {
-			System.out.println(userName +"ĞÅÏ¢¸üĞÂÊ§°Ü!");
+			System.out.println(userName +"ä¿¡æ¯æ›´æ–°å¤±è´¥!");
 			return;
 		}
 	}
 	public void exitSystem() {
-		System.out.println(getName() + "ÒÑÍË³öÏµÍ³!");
+		System.out.println(getName() + "å·²é€€å‡ºç³»ç»Ÿ!");
 		System.exit(0);
 	}
 	public void setName(String name){
@@ -58,6 +111,29 @@ public class User {
 	public String getRole() {
 		return role;
 	}
-	
-
+	public String chooseFolder(String file) {
+		File f = new File(file);
+		Scanner in = new Scanner(System.in);
+		if(f.isFile()) {
+			System.out.println("é€‰æ‹©è·¯å¾„æ˜¯æ–‡ä»¶ï¼Œè¿”å›çˆ¶ç›®å½•!");
+			return file;
+		}
+		Map map = new HashMap();
+		File[] ft = (new File(file).listFiles());
+		int cnt = 1;
+		System.out.println("ç¼–å·\tæ–‡ä»¶(æˆ–æ–‡ä»¶å¤¹)");
+		for(File t:ft) {
+			System.out.println(cnt+ "\t"+t.getName());
+			map.put(cnt++,t.getName());
+		}
+		System.out.println(cnt+"\t[ç»“æŸ]");
+		int chice = in.nextInt();
+		if(chice >= cnt) {
+			return file;
+		}
+		else{
+			String filetemp = map.get(chice).toString();
+			return chooseFolder(new String(file+"\\"+filetemp));
+		}
+	}
 }
