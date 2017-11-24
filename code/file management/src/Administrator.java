@@ -64,8 +64,19 @@ public class Administrator extends User{
 		userName = input.next();
 		System.out.print("\n请输入用户密码:");
 		userPassword = input.next();
-		System.out.print("\n请选择用户类型:");
-		userRole = input.next();
+		System.out.println("\n请选择用户类型:\n1,Administrator\n2,Operator\n3,Browser");
+		int c = input.nextInt();
+		switch(c) {
+		case 1:
+			userRole = "administrator";break;
+		case 2:
+			userRole = "operator";break;
+		case 3:
+			userRole = "browser";break;
+		default:
+			System.out.println("Error!");
+			return;
+		}
 		if(DataProcessing.insertUser(userName, userPassword, userRole)) {
 			System.out.println(userName + "添加成功!");
 		}

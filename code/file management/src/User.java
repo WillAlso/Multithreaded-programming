@@ -23,7 +23,7 @@ public class User {
 	}
 	public void downloadFile() throws IllegalStateException, SQLException {
 		String num;
-		String sourcepath = "C:\\sql";
+		String sourcepath = "C:\\sql\\"+getName();
 		String downloadpath;
 		System.out.print("请输入下载文件编号:");
 		Scanner input = new Scanner(System.in);
@@ -34,20 +34,31 @@ public class User {
 			System.out.println("请选择下载目录");
 			downloadpath = chooseFolder("C:\\");
 			File fin = new File(sourcepath+"\\"+doc.getPath());
-			File fout = new File(downloadpath+"\\"+doc.getPath());
+			System.out.print("请输入保存文件名:");
+			Scanner input3 = new Scanner(System.in);
+			String nametemp = input3.nextLine();
+			String nameed = fin.getName().substring(fin.getName().lastIndexOf(".")+1);
+			File fout = new File(downloadpath+"\\"+nametemp+"."+nameed);
+			if(fout.exists()) {
+				System.out.println("文件存在，是否继续？");
+				Scanner input2 = new Scanner(System.in);
+				String c = input2.nextLine();
+				if(!(c.equals("y")||c.equals("Y")))
+					return;
+			}
 			FileInputStream is;
 			FileOutputStream os;
 			double len = (double)(fin.length())/50;
 			System.out.println(len);
-			double cnt = 0;
+			/*double cnt = 0;
 			for(int m = 0;m < 50;m++) {
 				System.out.print("-");
-			}
+			}*/
 			System.out.println();
 			try {
 				is = new FileInputStream(fin);
 				os = new FileOutputStream(fout);
-				int b;
+				/*int b;
 				while((b=is.read()) != -1){
 					os.write(b);
 					cnt++;
@@ -57,7 +68,15 @@ public class User {
 					}
 				}
 				is.close();
-				os.close();		
+				os.close();*/
+				byte buf[] = new byte[1024];
+				int len_t = 0;
+				while((len_t=is.read(buf))!=-1) {  
+			           os.write(buf,0,len_t);  
+			           os.flush();  
+			    }  
+				os.close();
+				is.close();
 				System.out.println(doc.getPath()+"下载成功!\n");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -66,7 +85,7 @@ public class User {
 			}
 		}
 		else
-			System.out.println(doc.getPath()+"下载失败!");
+			System.out.println("下载失败!");
 	}
 	public void changeSelfInfo() throws IllegalStateException, SQLException {
 		String userName;

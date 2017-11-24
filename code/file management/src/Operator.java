@@ -14,6 +14,9 @@ public class Operator extends User{
 		setRole(role);
 	}
 	public void uploadFile() throws IllegalStateException, SQLException {
+		File folder = new File("C:\\sql\\"+getName());
+		if(!folder.exists())
+			folder.mkdirs();
 		String ID;
 		String file;
 		String description;
@@ -28,21 +31,33 @@ public class Operator extends User{
 		description = input1.nextLine();	
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 		File fin = new File(file);
-		File fout = new File("C:\\sql\\"+fin.getName());
+		/*Scanner input3 = new Scanner(System.in);
+		System.out.print("请输入保存文件名:");
+		String nametemp = input3.nextLine();
+		String nameed = fin.getName().substring(fin.getName().lastIndexOf(".")+1);
+		File fout = new File("C:\\sql\\"+getName()+"\\"+nametemp+"."+nameed);*/
+		File fout = new File("C:\\sql\\"+getName()+"\\"+fin.getName());
+		if(fout.exists()) {
+			System.out.println("文件存在，是否继续？");
+			Scanner input2 = new Scanner(System.in);
+			String c = input2.nextLine();
+			if(!(c.equals("y")||c.equals("Y")))
+				return;
+		}
 		if(DataProcessing.insertDoc(ID, getName(), timestamp, description, fin.getName())) {
 			double len = (double)(fin.length())/50;
 			double cnt = 0;
 			FileInputStream is;
 			FileOutputStream os;
-			System.out.println("下载进度:");
+			/*System.out.println("下载进度:");
 			for(int m =0;m < 50;m++) {
 				System.out.print("-");
-			}
+			}*/
 			System.out.println();
 			try {
 				is = new FileInputStream(fin);
 				os = new FileOutputStream(fout);
-				int b;
+				/*int b;
 				while((b=is.read()) != -1){
 					os.write(b);
 					cnt++;
@@ -50,9 +65,17 @@ public class Operator extends User{
 						cnt -= len;
 						System.out.print("-");
 					}
-				}
+				}				
 				is.close();
-				os.close();		
+				os.close();*/
+				byte buf[] = new byte[1024];
+				int len_t = 0;
+				while((len_t=is.read(buf))!=-1) {  
+			           os.write(buf,0,len_t);
+			           os.flush();
+			    }
+				os.close();
+				is.close();
 				System.out.println("\n上传成功!\n");
 			} catch (Exception e) {
 				System.out.println("文件操作错误!\n");
@@ -60,7 +83,7 @@ public class Operator extends User{
 			}
 		}
 		else {
-			System.out.println(file+"上传失败!");
+			System.out.println("上传失败!");
 		}
 	}
 	public void showMenu() throws IllegalStateException, SQLException {
@@ -91,7 +114,6 @@ public class Operator extends User{
 		File f = new File(file);
 		Scanner in = new Scanner(System.in);
 		if(f.isFile()) {
-			System.out.println("选择路径是文件，返回父目录!");
 			return file;
 		}
 		Map map = new HashMap();
