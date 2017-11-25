@@ -1,5 +1,5 @@
-﻿import java.sql.SQLException;
-import java.util.Scanner;
+﻿import java.sql.*;
+import java.util.*;
 
 public class Browser extends User{
 	Browser(String name,String password,String role){
@@ -24,7 +24,6 @@ public class Browser extends User{
 		case "4":
 			changeSelfInfo();break;
 		case "5":
-			//exitSystem();break;
 			return;
 		}	
 		}

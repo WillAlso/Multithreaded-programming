@@ -1,72 +1,74 @@
-﻿import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+﻿import java.io.*;
+import java.sql.*;
+import java.util.*;
 
 public class User {
 	private String name;
 	private String password;
 	private String role;
 	public void showMenu() throws IllegalStateException, SQLException {}
-	public void showFilelist() throws IllegalStateException, SQLException {
+	public boolean changeUserInfo(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException{return false;}
+	public static boolean addUser(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException {return false;};
+	public static String[] listUser() throws IllegalStateException, SQLException {return null;}
+	public static boolean deUser(String userName) throws IllegalStateException, SQLException {return false;}
+	public static String[] showFilelist() throws IllegalStateException, SQLException {
 		Enumeration<Doc> e = DataProcessing.getAllDocs();
 		System.out.println("编号\t所有者\t时间\t\t\t描述\t\t文件名");
+		int cnt = 0;
 		while(e.hasMoreElements()){
 			Doc user = e.nextElement();
-	        System.out.println(user.getNumber()+"\t"+user.getOwner()+"\t"+user.getTimestamp()+"\t"+user.getDescription()+"\t"+user.getPath());
+			cnt++;
 	     }
+		String[] temp = new String[cnt];
+		Enumeration<Doc> d = DataProcessing.getAllDocs();
+		int c = 0;
+		while(d.hasMoreElements()){
+			Doc user = d.nextElement();
+			temp[c++] = new String(user.getNumber()+"    "+user.getPath()+"    "+user.getOwner()+"      "+user.getTimestamp());
+	     }
+		return temp;
 	}
-	public void downloadFile() throws IllegalStateException, SQLException {
-		String num;
-		String sourcepath = "C:\\sql";
-		String downloadpath;
-		System.out.print("请输入下载文件编号:");
-		Scanner input = new Scanner(System.in);
-		num = input.next();
+	public boolean downloadFile(String num,String downloadpath) throws IllegalStateException, SQLException {
+		
+		System.out.println(num);
 		Doc doc = DataProcessing.searchDoc(num);
 		if(doc != null) {
-			File sourcefile = new File(sourcepath+doc.getPath());
-			System.out.println("请选择下载目录");
-			downloadpath = chooseFolder("C:\\");
+			String sourcepath = "C:\\sql\\"+doc.getOwner();
+			File sourcefile = new File(sourcepath+"\\"+doc.getPath());
+			System.out.println(sourcefile.getAbsolutePath());
 			File fin = new File(sourcepath+"\\"+doc.getPath());
+			String nameed = fin.getName().substring(fin.getName().lastIndexOf(".")+1);
 			File fout = new File(downloadpath+"\\"+doc.getPath());
+			if(fout.exists()){
+				return false;
+			}
 			FileInputStream is;
 			FileOutputStream os;
 			double len = (double)(fin.length())/50;
 			System.out.println(len);
-			double cnt = 0;
-			for(int m = 0;m < 50;m++) {
-				System.out.print("-");
-			}
 			System.out.println();
 			try {
 				is = new FileInputStream(fin);
 				os = new FileOutputStream(fout);
-				int b;
-				while((b=is.read()) != -1){
-					os.write(b);
-					cnt++;
-					while(cnt>=len) {
-						cnt -= len;
-						System.out.print("-");
-					}
-				}
+				byte buf[] = new byte[1024];
+				int len_t = 0;
+				while((len_t=is.read(buf))!=-1) {  
+			           os.write(buf,0,len_t);  
+			           os.flush();  
+			    }  
+				os.close();
 				is.close();
-				os.close();		
 				System.out.println(doc.getPath()+"下载成功!\n");
+				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("文件操作错误!\n");
-				return;
+				return false;
 			}
 		}
 		else
-			System.out.println(doc.getPath()+"下载失败!");
+			System.out.println("下载失败!");
+		return false;
 	}
 	public void changeSelfInfo() throws IllegalStateException, SQLException {
 		String userName;

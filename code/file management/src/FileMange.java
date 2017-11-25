@@ -1,5 +1,5 @@
 ﻿import java.io.*;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 public class FileMange {

@@ -1,6 +1,5 @@
 ﻿import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.Scanner;
+import java.util.*;
 
 public class Administrator extends User{
 	Administrator(String name,String password,String role){
@@ -8,77 +7,52 @@ public class Administrator extends User{
 		setPassword(password);
 		setRole(role);
 	}
-	public void changeUserInfo() throws IllegalStateException, SQLException {
-		String userName;
-		String userPassword;
-		String userRole;
-		System.out.print("请输入用户姓名:");
-		Scanner input = new Scanner(System.in);
-		userName = input.next();
-		System.out.print("\n请输入用户新密码:");
-		userPassword = input.next();
-		System.out.println("\n请选择用户类型:\n1,Administrator\n2,Operator\n3,Browser");
-		int c = input.nextInt();
-		switch(c) {
-		case 1:
-			userRole = "administrator";break;
-		case 2:
-			userRole = "operator";break;
-		case 3:
-			userRole = "browser";break;
-			default:
-				System.out.println("Error!");
-				return;
-		}
+	public boolean changeUserInfo(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException {
 		if(DataProcessing.updateUser(userName, userPassword, userRole)) {
 			System.out.println(userName +" 信息更新成功 !");
+			return true;
 		}
 		else {
 			System.out.println(userName +"信息更新失败!");
-			return;
+			return false;
 		}
 	}
-	public void deUser() throws IllegalStateException, SQLException {
-			String userName;
-			System.out.print("请输入用户密码:");
-			Scanner input = new Scanner(System.in);
-			userName = input.next();
-			if(getName().equals(userName)) {
-				System.out.println("不能删除自己");
-				return;
-			}
+	public static boolean deUser(String userName) throws IllegalStateException, SQLException {
 			if(DataProcessing.deleteUser(userName)) {
 				System.out.println(userName +"删除成功");
+				return true;
 			}
 			else {
 				System.out.println(userName + "删除失败!");
-				return;
+				return false;
 			}
 	}
-	public void addUser() throws IllegalStateException, SQLException {
-		String userName;
-		String userPassword;
-		String userRole;
-		System.out.print("请输入用户姓名:");
-		Scanner input = new Scanner(System.in);
-		userName = input.next();
-		System.out.print("\n请输入用户密码:");
-		userPassword = input.next();
-		System.out.print("\n请选择用户类型:");
-		userRole = input.next();
+	public static boolean addUser(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException {
+		
 		if(DataProcessing.insertUser(userName, userPassword, userRole)) {
 			System.out.println(userName + "添加成功!");
+			return true;
 		}
 		else {
 			System.out.println(userName + "添加失败!");
+			return false;
 		}
 	}
-	public void listUser() throws IllegalStateException, SQLException {
+	public static String[] listUser() throws IllegalStateException, SQLException {
 		Enumeration<User> e = DataProcessing.getAllUser();
+		int cnt = 0;
 		while(e.hasMoreElements()){
 			User user = e.nextElement();
-	        System.out.println(user.getName()+"\t"+user.getRole());
+	        cnt++;
 	     }
+		String[] temp = new String[cnt];
+		Enumeration<User> d = DataProcessing.getAllUser();
+		int c = 0;
+		while(d.hasMoreElements()){
+			User user = d.nextElement();
+			temp[c++] = new String(user.getName()+"    "+user.getRole());
+		}
+		return temp;
 	}
 	public void showMenu() throws IllegalStateException, SQLException {
 		System.out.println("The Administrator's Menu:");
