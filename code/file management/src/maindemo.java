@@ -142,6 +142,10 @@ public class maindemo {
 		chckbxNewCheckBox_2.setBounds(496, 157, 103, 23);
 		desktopPane.add(chckbxNewCheckBox_2);
 		
+		JButton btnNewButton_8 = new JButton("New button");
+		btnNewButton_8.setBounds(251, 69, 93, 23);
+		desktopPane.add(btnNewButton_8);
+		
 		 
 	}
 }

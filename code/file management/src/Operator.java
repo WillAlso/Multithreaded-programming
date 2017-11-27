@@ -8,22 +8,10 @@ public class Operator extends User{
 		setPassword(password);
 		setRole(role);
 	}
-	public void uploadFile() throws IllegalStateException, SQLException {
+	public boolean uploadFile(String ID,String description,String file) throws IllegalStateException, SQLException {
 		File folder = new File("C:\\sql\\"+getName());
 		if(!folder.exists())
 			folder.mkdirs();
-		String ID;
-		String file;
-		String description;
-		Scanner input = new Scanner(System.in);
-		System.out.print("请输入上传文件名:");		
-		file = chooseFile("C:\\");
-		System.out.println(file);
-		System.out.print("请输入文件编号:");
-		ID = input.next();
-		System.out.print("请输入文件描述:");
-		Scanner input1 = new Scanner(System.in);
-		description = input1.nextLine();	
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 		File fin = new File(file);
 		File fout = new File("C:\\sql\\"+getName()+"\\"+fin.getName());
@@ -32,8 +20,10 @@ public class Operator extends User{
 			Scanner input2 = new Scanner(System.in);
 			String c = input2.nextLine();
 			if(!(c.equals("y")||c.equals("Y")))
-				return;
+				return false;
 		}
+		System.out.println(ID+" "+getName()+description+ fin.getAbsolutePath());
+		System.out.println(ID+" "+getName()+description+ fout.getAbsolutePath());
 		if(DataProcessing.insertDoc(ID, getName(), timestamp, description, fin.getName())) {
 			double len = (double)(fin.length())/50;
 			double cnt = 0;
@@ -52,13 +42,15 @@ public class Operator extends User{
 				os.close();
 				is.close();
 				System.out.println("\n上传成功!\n");
+				return true;
 			} catch (Exception e) {
 				System.out.println("文件操作错误!\n");
-				return;
+				return false;
 			}
 		}
 		else {
 			System.out.println("上传失败!");
+			return false;
 		}
 	}
 	public void showMenu() throws IllegalStateException, SQLException {

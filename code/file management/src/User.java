@@ -11,6 +11,7 @@ public class User {
 	public static boolean addUser(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException {return false;};
 	public static String[] listUser() throws IllegalStateException, SQLException {return null;}
 	public static boolean deUser(String userName) throws IllegalStateException, SQLException {return false;}
+	public boolean uploadFile(String ID,String description,String file) throws IllegalStateException, SQLException {return false;}
 	public static String[] showFilelist() throws IllegalStateException, SQLException {
 		Enumeration<Doc> e = DataProcessing.getAllDocs();
 		System.out.println("编号\t所有者\t时间\t\t\t描述\t\t文件名");
@@ -70,25 +71,20 @@ public class User {
 			System.out.println("下载失败!");
 		return false;
 	}
-	public void changeSelfInfo() throws IllegalStateException, SQLException {
+	public boolean changeSelfInfo(String userPassword,String userPassword_1) throws IllegalStateException, SQLException {
 		String userName;
-		String userPassword;
 		userName = getName();
-		Scanner input = new Scanner(System.in);
-		System.out.print("\n请输入用户旧密码:");
-		userPassword = input.next();
 		if(!userPassword.equals(getPassword())) {
 			System.out.println("密码错误!");
-			return;
+			return false;
 		}
-		System.out.print("\n请输入用户新密码:");
-		userPassword = input.next();
-		if(DataProcessing.updateUser(userName, userPassword, getRole())) {
+		if(DataProcessing.updateUser(userName, userPassword_1, getRole())) {
 			System.out.println(userName +" 信息更新成功 !");
+			return true;
 		}
 		else {
 			System.out.println(userName +"信息更新失败!");
-			return;
+			return false;
 		}
 	}
 	public void exitSystem() {
