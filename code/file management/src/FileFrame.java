@@ -6,11 +6,11 @@ import javax.swing.*;
 
 public class FileFrame {
 	public static void main(String args[]){
-		login l = new login();
+		Login l = new Login();
 	}
 }
 
-class login implements ActionListener{
+class Login implements ActionListener{
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
@@ -24,35 +24,35 @@ class login implements ActionListener{
 	private JButton button_1;
 	private JDesktopPane desktopPane;
 	private JDesktopPane mainPane;
-	JTextField tf_01;
-	JTextField tf_02;
-	File file;
-	JMenuBar mBar;
-	JMenu menu1;
-	JMenu menu2;
-	JMenuItem mil1;
-	JMenuItem mil2;
-	JMenuItem mil3;
-	JMenuItem mil4;
-	JMenuItem mil5;
-	JMenuItem mil6;
-	JButton btn;
-	JButton btn_1;
-	JButton btn_2;
-	JButton btn_3;
-	JButton btn_4;
-	JButton btn_5;
-	JButton btn_6;
-	JButton btn_7;
-	JButton btn_8;
-	JButton btn_9;
-	JList list_ad;
-	JList li;
-	JList li_1;
-	JList li_2;
-	private int flag;
+	private JTextField tf_01;
+	private JTextField tf_02;
+	private File file;
+	private JMenuBar mBar;
+	private JMenu menu1;
+	private JMenu menu2;
+	private JMenuItem mil1;
+	private JMenuItem mil2;
+	private JMenuItem mil3;
+	private JMenuItem mil4;
+	private JMenuItem mil5;
+	private JMenuItem mil6;
+	private JButton btn;	//文件列表
+	private JButton btn_1;	//下载文件
+	private JButton btn_2;	//改变用户信息
+	private JButton btn_3;	//删除用户
+	private JButton btn_4;	//添加用户
+	private JButton btn_5;	//用户列表
+	private JButton btn_6;	//显示菜单
+	private JButton btn_7;	//退出登录
+	private JButton btn_8;	//上传文件
+	private JButton btn_9;	//更改信息
+	private JTable list_ad;	//
+	private JList li;		//
+	private JList li_1;		//
+	private JTable li_2;		//
+	private int flag;		//
 	private User user;
-	public login(){
+	public Login(){
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,29 +60,26 @@ class login implements ActionListener{
 		desktopPane.setBackground(Color.WHITE);
 		frame.getContentPane().add(desktopPane, BorderLayout.CENTER);
 		textField = new JTextField();
-		textField.setBounds(160, 66, 151, 21);
-		desktopPane.add(textField);
-		textField.setColumns(10);
-		JLabel label = new JLabel("用户");
-		label.setBounds(120, 70, 30, 20);
-		desktopPane.add(label);
 		passwordField = new JPasswordField();
-		passwordField.setBounds(160, 108, 151, 21);
-		desktopPane.add(passwordField);
-		JLabel lblNewLabel = new JLabel("密码");
-		lblNewLabel.setBounds(120, 110, 30, 20);
-		desktopPane.add(lblNewLabel);
 		button = new JButton("登录");
-		
-		button.setBounds(115, 160, 90, 20);
-		button.addActionListener(this);
-		desktopPane.add(button);
-		
 		button_1 = new JButton("退出");
+		JLabel label = new JLabel("用户");
+		JLabel lblNewLabel = new JLabel("密码");
+		textField.setBounds(160, 66, 151, 21);
+		textField.setColumns(10);
+		passwordField.setBounds(160, 108, 151, 21);
+		lblNewLabel.setBounds(120, 110, 30, 20);
+		button.setBounds(115, 160, 90, 20);
 		button_1.setBounds(245, 160, 90, 20);
+		label.setBounds(120, 70, 30, 20);
+		desktopPane.add(textField);
+		desktopPane.add(label);
+		desktopPane.add(passwordField);
+		desktopPane.add(lblNewLabel);
+		desktopPane.add(button);		
+		button.addActionListener(this);
 		button_1.addActionListener(this);
 		desktopPane.add(button_1);
-		//pass();
 		if(flag == 2){
 			res_ad();
 		}else if(flag == 1){
@@ -96,8 +93,8 @@ class login implements ActionListener{
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
 		mBar = new JMenuBar();
-		mBar.setBounds(0,0,80,20);
-		menu1 = new JMenu("菜单");
+		mBar.setBounds(0,0,100,30);
+		menu1 = new JMenu(" 菜单 ");
 		menu2 = new JMenu("系统");
 		mil1 = new JMenuItem("返回主页");
 		mil2 = new JMenuItem("账户信息");
@@ -113,14 +110,16 @@ class login implements ActionListener{
 		btn_5 = new JButton("用户列表");
 		btn_6 = new JButton("显示菜单");
 		btn_7 = new JButton("退出登录");
-		btn.setBounds(20, 51, 93, 23);
-		btn_1.setBounds(20, 89, 93, 23);
-		btn_2.setBounds(20, 132, 93, 23);
-		btn_3.setBounds(20, 176, 93, 23);
-		btn_4.setBounds(20, 220, 93, 23);
-		btn_5.setBounds(20, 272, 93, 23);
-		btn_6.setBounds(20, 316, 93, 23);
-		btn_7.setBounds(20, 359, 93, 23);
+		btn.setBounds(20, 50, 90, 20);
+		btn_1.setBounds(20, 80, 90, 20);
+		btn_2.setBounds(20, 110, 90, 20);
+		btn_3.setBounds(20, 140, 90, 20);
+		btn_4.setBounds(20, 170, 90, 20);
+		btn_5.setBounds(20, 200, 90, 20);
+		btn_6.setBounds(20, 230, 90, 20);
+		btn_7.setBounds(20, 260, 90, 20);
+		mil1.setSize(50, 15);
+		menu1.setSize(50, 25);
 		menu1.add(mil1);
 		menu1.add(mil2);
 		menu2.add(mil3);
@@ -169,25 +168,15 @@ class login implements ActionListener{
 		btn = new JButton("文件列表");
 		btn_1 = new JButton("下载文件");
 		btn_8 = new JButton("上传文件");
-		//btn_2 = new JButton("改变用户");
-		//btn_3 = new JButton("删除用户");
-		//btn_4 = new JButton("添加用户");
-		//btn_5 = new JButton("用户列表");
 		btn_6 = new JButton("显示菜单");
 		btn_9 = new JButton("更改信息");
 		btn_7 = new JButton("退出登录");
-		btn.setBounds(20, 51, 93, 23);
-		btn_1.setBounds(20, 89, 93, 23);
-		btn_8.setBounds(20, 132, 93, 23);
-		btn_6.setBounds(20, 176, 93, 23);
-		btn_9.setBounds(20, 220, 93, 23);
-		btn_7.setBounds(20, 272, 93, 23);
-		//btn_2.setBounds(20, 132, 93, 23);
-		//btn_3.setBounds(20, 176, 93, 23);
-		//btn_4.setBounds(20, 220, 93, 23);
-		//btn_5.setBounds(20, 272, 93, 23);
-		//btn_6.setBounds(20, 176, 93, 23);
-		//btn_7.setBounds(20, 359, 93, 23);
+		btn.setBounds(20, 50, 90, 20);
+		btn_1.setBounds(20, 80, 90, 20);
+		btn_8.setBounds(20, 110, 90, 20);
+		btn_6.setBounds(20, 140, 90, 20);
+		btn_9.setBounds(20, 170, 90, 20);
+		btn_7.setBounds(20, 200, 90, 20);
 		menu1.add(mil1);
 		menu1.add(mil2);
 		menu2.add(mil3);
@@ -200,26 +189,14 @@ class login implements ActionListener{
 		mainPane.add(btn);
 		mainPane.add(btn_1);
 		mainPane.add(btn_8);
-		//mainPane.add(btn_2);
-		//mainPane.add(btn_3);
-		//mainPane.add(btn_4);
-		//mainPane.add(btn_5);
 		mainPane.add(btn_6);
 		mainPane.add(btn_9);
 		mainPane.add(btn_7);	
 		mil1.addActionListener(this);
-		//mil2.addActionListener(this);
-		//mil3.addActionListener(this);
-		//mil4.addActionListener(this);
-		//mil5.addActionListener(this);
 		mil6.addActionListener(this);
 		btn.addActionListener(this);
 		btn_1.addActionListener(this);
 		btn_8.addActionListener(this);
-		//btn_2.addActionListener(this);
-		//btn_3.addActionListener(this);
-		//btn_4.addActionListener(this);
-		//btn_5.addActionListener(this);
 		btn_6.addActionListener(this);
 		btn_9.addActionListener(this);
 		btn_7.addActionListener(this);
@@ -239,22 +216,14 @@ class login implements ActionListener{
 		mil6 = new JMenuItem("反馈");
 		btn = new JButton("文件列表");
 		btn_1 = new JButton("下载文件");
-		//btn_2 = new JButton("改变用户");
-		//btn_3 = new JButton("删除用户");
-		//btn_4 = new JButton("添加用户");
-		//btn_5 = new JButton("用户列表");
 		btn_6 = new JButton("显示菜单");
 		btn_9 = new JButton("更改信息");
 		btn_7 = new JButton("退出登录");
-		btn.setBounds(20, 51, 93, 23);
-		btn_1.setBounds(20, 89, 93, 23);
-		//btn_2.setBounds(20, 132, 93, 23);
-		//btn_3.setBounds(20, 176, 93, 23);
-		//btn_4.setBounds(20, 220, 93, 23);
-		//btn_5.setBounds(20, 272, 93, 23);
-		btn_6.setBounds(20, 132, 93, 23);
-		btn_9.setBounds(20, 176, 93, 23);
-		btn_7.setBounds(20, 220, 93, 23);
+		btn.setBounds(20, 50, 90, 20);
+		btn_1.setBounds(20, 80, 90, 20);
+		btn_6.setBounds(20, 110, 90, 20);
+		btn_9.setBounds(20, 140, 90, 20);
+		btn_7.setBounds(20, 170, 90, 20);
 		menu1.add(mil1);
 		menu1.add(mil2);
 		menu2.add(mil3);
@@ -266,10 +235,6 @@ class login implements ActionListener{
 		mainPane.add(mBar);
 		mainPane.add(btn);
 		mainPane.add(btn_1);
-		//mainPane.add(btn_2);
-		//mainPane.add(btn_3);
-		//mainPane.add(btn_4);
-		//mainPane.add(btn_5);
 		mainPane.add(btn_6);
 		mainPane.add(btn_9);
 		mainPane.add(btn_7);	
@@ -281,15 +246,11 @@ class login implements ActionListener{
 		mil6.addActionListener(this);
 		btn.addActionListener(this);
 		btn_1.addActionListener(this);
-		//btn_2.addActionListener(this);
-		//btn_3.addActionListener(this);
-		//btn_4.addActionListener(this);
-		//btn_5.addActionListener(this);
 		btn_6.addActionListener(this);
 		btn_9.addActionListener(this);
 		btn_7.addActionListener(this);
 	}
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {	//刷新菜单
 		if(e.getSource() == mil1){
 			frame.remove(mainPane);
 			if(flag == 2){
@@ -303,7 +264,7 @@ class login implements ActionListener{
 			frame.validate();
 		}else if(e.getSource() == mil2){
 			
-		}else if(e.getSource() == mil3){
+		}else if(e.getSource() == mil3){			//关闭程序
 			System.exit(0);
 		}else if(e.getSource() == mil4){
 			
@@ -311,7 +272,7 @@ class login implements ActionListener{
 			
 		}else if(e.getSource() == mil6){
 			
-		}else if(e.getSource() == btn){
+		}else if(e.getSource() == btn){				//文件列表
 			frame.remove(mainPane);
 			if(flag == 2){
 				res_ad();
@@ -321,19 +282,25 @@ class login implements ActionListener{
 				res_br();
 			}
 			try {
-				String[] m = User.showFilelist();
-				list_ad = new JList<String>(m);
+				Doc[] m = user.showFilelist();
+				String[] column = {"编号","所有者","时间","描述","文件名"};
+				Object[][] data = new Object[m.length][5];
+				for(int i = 0;i < m.length;i++){
+						data[i][0] = m[i].getNumber();
+						data[i][1] = m[i].getOwner();
+						data[i][2] = m[i].getTimestamp();
+						data[i][3] = m[i].getDescription();
+						data[i][4] = m[i].getPath();
+				}
+				list_ad = new JTable(data,column);
 			} catch (IllegalStateException | SQLException e1) {
 				e1.printStackTrace();
 			}
-			 JLabel lt = new JLabel("名字       编号        所有者      时间");
-			 lt.setBounds(200, 40, 200,20);
-			 mainPane.add(lt);
 			 list_ad.setBounds(200, 60, 800,1000);
 			 mainPane.add(list_ad);
 			 frame.add(mainPane);
 			 frame.validate();
-		}else if(e.getSource() == btn_1){
+		}else if(e.getSource() == btn_1){			//下载文件
 			frame.remove(mainPane);
 			if(flag == 2){
 				res_ad();
@@ -343,14 +310,20 @@ class login implements ActionListener{
 				res_br();
 			}
 			try {
-				String[] m = User.showFilelist();
-				list_ad = new JList<String>(m);
+				Doc[] m = user.showFilelist();
+				String[] column = {"编号","所有者","时间","描述","文件名"};
+				Object[][] data = new Object[m.length][5];
+				for(int i = 0;i < m.length;i++){
+						data[i][0] = m[i].getNumber();
+						data[i][1] = m[i].getOwner();
+						data[i][2] = m[i].getTimestamp();
+						data[i][3] = m[i].getDescription();
+						data[i][4] = m[i].getPath();
+				}
+				list_ad = new JTable(data,column);
 			} catch (IllegalStateException | SQLException e1) {
 				e1.printStackTrace();
 			}
-			 JLabel lt = new JLabel("编号       名字        所有者      时间");
-			 lt.setBounds(200, 40, 200,20);
-			 mainPane.add(lt);
 			 list_ad.setBounds(200, 60, 800,1000);
 			 mainPane.add(list_ad);
 			 JButton bt = new JButton("确定");
@@ -358,9 +331,9 @@ class login implements ActionListener{
 			 mainPane.add(bt);
 			 bt.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent arg0){
-					 if(list_ad.getSelectedValue()!=null){
-						 String str=list_ad.getSelectedValue().toString();
-						 String downFile = str.substring(0,str.indexOf(" "));
+					 if(list_ad.getSelectedRow() != -1){
+						 String str= (String) list_ad.getValueAt(list_ad.getSelectedRow(), 4);
+						 String downFile = str;
 						 JFrame fe = new JFrame();
 						 fe.setBounds(100, 100, 450, 300);
 						fe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -369,7 +342,6 @@ class login implements ActionListener{
 						dlg.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 						dlg.addActionListener(new ActionListener(){
 							public void actionPerformed(ActionEvent e){
-									
 									File file = dlg.getSelectedFile();
 									if(file != null){
 										try {
@@ -383,15 +355,11 @@ class login implements ActionListener{
 											 tl.setBounds(133, 176, 54, 15);
 											 mainPane.add(tl);
 											}
-												
 										} catch (IllegalStateException | SQLException e1) {
-											// TODO Auto-generated catch block
 											e1.printStackTrace();
 										}
 									}
-										
 									fe.setVisible(false);
-								
 							}
 						});
 						File file = dlg.getSelectedFile();
@@ -404,7 +372,7 @@ class login implements ActionListener{
 			 }});
 			frame.add(mainPane);
 			frame.validate();
-		}else if(e.getSource() == btn_2){//更改用户
+		}else if(e.getSource() == btn_2){			//更改用户
 			frame.remove(mainPane);
 			if(flag == 2){
 				res_ad();
@@ -413,29 +381,24 @@ class login implements ActionListener{
 			}else if(flag == 0){
 				res_br();
 			}
-					
 			JLabel lblNewLabel_2 = new JLabel("用户");
 			lblNewLabel_2.setBounds(270, 80, 40, 20);
 			mainPane.add(lblNewLabel_2);
-			
 			JLabel lblNewLabel_3 = new JLabel("密码");
 			lblNewLabel_3.setBounds(270, 115, 40, 20);
 			mainPane.add(lblNewLabel_3);
-			
 			textField_1 = new JTextField();
 			textField_1.setBounds(350, 80, 105, 20);
 			mainPane.add(textField_1);
-			
 			passwordField_1 = new JPasswordField();
 			passwordField_1.setBounds(350, 115, 105, 20);
 			mainPane.add(passwordField_1);
-			
 			String m[] = {"administrator","operator","browser"};
 			li = new JList<String>(m);
 			li.setBounds(270,150,600,100);
 			mainPane.add(li);
 			JButton bt = new JButton("确定");
-			 bt.setBounds(20, 400, 93,23);
+			 bt.setBounds(20, 400, 90,20);
 			 mainPane.add(bt);
 			 bt.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent g){
@@ -462,9 +425,7 @@ class login implements ActionListener{
 								 passwordField_1.setText("");
 								 li.clearSelection();
 							}
-								
 						} catch (IllegalStateException | SQLException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					 }
@@ -472,7 +433,7 @@ class login implements ActionListener{
 			 });
 			frame.add(mainPane);
 			frame.validate();
-		}else if(e.getSource() == btn_3){
+		}else if(e.getSource() == btn_3){			//删除用户
 			frame.remove(mainPane);
 			if(flag == 2){
 				res_ad();
@@ -481,31 +442,33 @@ class login implements ActionListener{
 			}else if(flag == 0){
 				res_br();
 			}
-			
 			try {
-				String[] m = Administrator.listUser();
-				li_2 = new JList<String>(m);
+				User[] m = user.listUser();
+				String[] column = {"用户","类型"};
+				Object[][] data = new Object[m.length][2];
+				for(int i = 0;i < m.length;i++){
+					data[i][0] = m[i].getName();
+					data[i][1] = m[i].getRole();
+				}
+				li_2 = new JTable(data,column);
 			} catch (IllegalStateException | SQLException e1) {
 				e1.printStackTrace();
 			}
-			 JLabel lt = new JLabel("名字       类型");
-			 lt.setBounds(200, 40, 200,20);
-			 mainPane.add(lt);
 			 li_2.setBounds(200, 60, 800,1000);
 			 mainPane.add(li_2);
 			 JButton bt = new JButton("确定");
-			 bt.setBounds(20, 400, 93,23);
+			 bt.setBounds(20, 400, 90,20);
 			 mainPane.add(bt);
 			 bt.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent g){
 					 String role = null;
-					 role = li_2.getSelectedValue().toString();
-					 String n = role.substring(0,role.indexOf(" "));
+					 role = (String) li_2.getValueAt(li_2.getSelectedRow(), 1);
+					 String n = (String) li_2.getValueAt(li_2.getSelectedRow(), 0);
 					 System.out.println(role);
 						 try {
-							if(Administrator.deUser(n)){
+							if(user.deUser(n)){
 								JLabel tl = new JLabel("删除成功");
-								li_2.remove(li_2.getSelectedIndex());
+								li_2.remove(li_2.getSelectedRow());
 								 tl.setBounds(133, 176, 54, 15);
 								 mainPane.add(tl);
 								 li_2.clearSelection();
@@ -517,9 +480,7 @@ class login implements ActionListener{
 								 mainPane.add(tl);
 								 li_2.clearSelection();
 							}
-								
 						} catch (IllegalStateException | SQLException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					 
@@ -527,8 +488,7 @@ class login implements ActionListener{
 			 });
 			frame.add(mainPane);
 			frame.validate();
-			
-		}else if(e.getSource() == btn_4){//添加用户
+		}else if(e.getSource() == btn_4){		//添加用户
 			frame.remove(mainPane);
 			if(flag == 2){
 				res_ad();
@@ -540,24 +500,19 @@ class login implements ActionListener{
 			JLabel lblNewLabel_2 = new JLabel("用户");
 			lblNewLabel_2.setBounds(270, 80, 40, 20);
 			mainPane.add(lblNewLabel_2);
-			
 			JLabel lblNewLabel_3 = new JLabel("密码");
 			lblNewLabel_3.setBounds(270, 115, 40, 20);
 			mainPane.add(lblNewLabel_3);
-			
 			textField_2 = new JTextField();
 			textField_2.setBounds(350, 80, 105, 20);
 			mainPane.add(textField_2);
-			
 			passwordField_2 = new JPasswordField();
 			passwordField_2.setBounds(350, 115, 105, 20);
 			mainPane.add(passwordField_2);
-			
 			String m[] = {"administrator","operator","browser"};
 			li_1 = new JList<String>(m);
 			li_1.setBounds(270,150,600,100);
 			mainPane.add(li_1);
-			
 			JButton bt = new JButton("确定");
 			 bt.setBounds(20, 400, 93,23);
 			 mainPane.add(bt);
@@ -570,7 +525,7 @@ class login implements ActionListener{
 					 System.out.println(name+pass+role);
 					// if(name != null && pass != null && role != null){
 						 try {
-							if(Administrator.addUser(name, pass, role)){
+							if(user.addUser(name, pass, role)){
 								JLabel tl = new JLabel("添加成功");
 								 System.out.println(name+pass+role);
 								 tl.setBounds(133, 176, 54, 15);
@@ -581,23 +536,21 @@ class login implements ActionListener{
 							}
 							else{
 								JLabel tl = new JLabel("添加失败");
-								 tl.setBounds(133, 176, 54, 15);
-								 mainPane.add(tl);
-								 textField_2.setText("");
-								 passwordField_2.setText("");
-								 li_1.clearSelection();
+								tl.setBounds(133, 176, 54, 15);
+								mainPane.add(tl);
+								textField_2.setText("");
+								passwordField_2.setText("");
+								li_1.clearSelection();
 							}
-								
 						} catch (IllegalStateException | SQLException e) {
 							e.printStackTrace();
 						}
 					 }
-				// }
 			 });
 			frame.add(mainPane);
 			frame.validate();
 			
-		}else if(e.getSource() == btn_5){//用户列表
+		}else if(e.getSource() == btn_5){		//用户列表
 			frame.remove(mainPane);
 			if(flag == 2){
 				res_ad();
@@ -606,10 +559,15 @@ class login implements ActionListener{
 			}else if(flag == 0){
 				res_br();
 			}
-			
 			try {
-				String[] m = Administrator.listUser();
-				li_2 = new JList<String>(m);
+				User[] m = user.listUser();
+				String[] column = {"用户","类型"};
+				Object[][] data = new Object[m.length][2];
+				for(int i = 0;i < m.length;i++){
+					data[i][0] = m[i].getName();
+					data[i][1] = m[i].getRole();
+				}
+				li_2 = new JTable(data,column);
 			} catch (IllegalStateException | SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -618,7 +576,6 @@ class login implements ActionListener{
 			 mainPane.add(lt);
 			 li_2.setBounds(200, 60, 800,1000);
 			 mainPane.add(li_2);
-			
 			frame.add(mainPane);
 			frame.validate();
 		}else if(e.getSource() == btn_6){
@@ -645,7 +602,7 @@ class login implements ActionListener{
 			user = null;
 			frame.add(desktopPane);
 			frame.validate();
-		}else if(e.getSource() == btn_8){//上传文件
+		}else if(e.getSource() == btn_8){		//上传文件
 			frame.remove(mainPane);
 			if(flag == 2){
 				res_ad();
@@ -657,7 +614,6 @@ class login implements ActionListener{
 			JButton btnNewButton_11 = new JButton("选择文件");
 			btnNewButton_11.setBounds(250, 65, 90, 20);
 			mainPane.add(btnNewButton_11);
-			
 			btnNewButton_11.addActionListener(new ActionListener(){
 				 public void actionPerformed(ActionEvent g){
 					JFrame fe = new JFrame();
@@ -685,15 +641,12 @@ class login implements ActionListener{
 					JLabel ll2 = new JLabel("描述");
 					ll2.setBounds(268, 120, 50, 15);
 					mainPane.add(ll2);
-					
 					tf_01 = new JTextField();
 					tf_01.setBounds(355, 90, 100, 21);
 					mainPane.add(tf_01);
-					
 					tf_02 = new JTextField();
 					tf_02.setBounds(355, 120, 100, 21);
 					mainPane.add(tf_02);
-					
 					JButton btn01 = new JButton("上传");
 					btn01.setBounds(250, 150, 90, 20);
 					mainPane.add(btn01);
@@ -722,34 +675,25 @@ class login implements ActionListener{
 					fe.setVisible(true);
 				 }
 			});
-			
 			frame.add(mainPane);
 			frame.validate();
-		}else if(e.getSource() == btn_9){//更改信息
+		}else if(e.getSource() == btn_9){		//更改信息
 			frame.remove(mainPane);
-			if(flag == 2){
-				res_ad();
-			}else if(flag == 1){
-				res_op();
-			}else if(flag == 0){
-				res_br();
-			}
+			if(flag == 2)	{res_ad();}
+			else if(flag == 1)	{res_op();}
+			else if(flag == 0)	{res_br();}
 			JLabel lb = new JLabel("旧密码");
+			JLabel lb_1 = new JLabel("新密码");
 			lb.setBounds(270, 80, 40, 20);
 			mainPane.add(lb);
-			
-			JLabel lb_1 = new JLabel("新密码");
 			lb_1.setBounds(270, 115, 40, 20);
 			mainPane.add(lb_1);
-			
 			passwordField_3 = new JPasswordField();
 			passwordField_3.setBounds(350, 80, 105, 20);
 			mainPane.add(passwordField_3);
-			
 			passwordField_4 = new JPasswordField();
 			passwordField_4.setBounds(350, 115, 105, 20);
 			mainPane.add(passwordField_4);
-			
 			JButton bt = new JButton("确定");
 			 bt.setBounds(20, 400, 93,23);
 			 mainPane.add(bt);
@@ -772,9 +716,12 @@ class login implements ActionListener{
 							 passwordField_3.setText("");
 							 passwordField_4.setText("");
 						}
-							
-					} catch (IllegalStateException | SQLException e) {
-						e.printStackTrace();
+					}  catch (IllegalStateException g1) {
+						System.out.println("Error in excecuting Query");
+						System.exit(0);
+					} catch (SQLException g1) {
+						System.out.println("Not Connected to Database");
+						System.exit(0);
 					}
 				}
 			 });
@@ -819,70 +766,13 @@ class login implements ActionListener{
 				}
 			} catch (IllegalStateException g) {
 				System.out.println("Error in excecuting Query");
-				System.exit(0);
+			//	System.exit(0);
 			} catch (SQLException g) {
 				System.out.println("Not Connected to Database");
-				System.exit(0);
+			//	System.exit(0);
 			}
-			
-		
 		}else if(e.getSource() == button_1){
 			System.exit(0);
 		}
 	}
-	/*public void pass(){
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String name = textField.getText();
-				String password = new String(passwordField.getPassword());
-				try {
-					user = DataProcessing.searchUser(name, password);
-					if(user != null){
-						System.out.println(user.getRole());
-					switch(user.getRole()){
-						case "administrator":
-							user = new Administrator(name,password,user.getRole());flag = 2;break;
-						case "operator":
-							user = new Operator(name,password,user.getRole());flag = 1;break;
-						case "browser":
-							user = new Browser(name,password,user.getRole());flag = 0;break;
-						}
-						frame.remove(desktopPane);
-						frame.setBounds(100, 100, 707, 479);
-						textField.setText("");
-						passwordField.setText("");
-						if(flag == 2){
-							res_ad();
-						}else if(flag == 1){
-							res_op();
-						}else if(flag == 0){
-							res_br();
-						}
-						frame.add(mainPane);
-						frame.validate();
-					}
-					else{
-						JLabel label = new JLabel("用户名或者密码错误!");
-						label.setForeground(Color.red);
-						label.setBounds(150, 85,120,120);
-						desktopPane.add(label);
-						frame.validate();
-					}
-				} catch (IllegalStateException e) {
-					System.out.println("Error in excecuting Query");
-					System.exit(0);
-				} catch (SQLException e) {
-					System.out.println("Not Connected to Database");
-					System.exit(0);
-				}
-				
-			}
-		});
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-	}*/
-
 }

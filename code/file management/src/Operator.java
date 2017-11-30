@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.*;
 
 public class Operator extends User{
-	Operator(String name,String password,String role){
+	public Operator(String name,String password,String role){
 		setName(name);
 		setPassword(password);
 		setRole(role);
@@ -52,47 +52,5 @@ public class Operator extends User{
 			System.out.println("上传失败!");
 			return false;
 		}
-	}
-	public void showMenu() throws IllegalStateException, SQLException {
-		System.out.println("The Operator's Menu:");
-		System.out.println("1,文件列表\n2,下载文件\n3,上传文件\n4,显示菜单\n5,更改信息\n6,退出登录");
-		Scanner input = new Scanner(System.in);
-		String c;
-		while(true) {
-			c = input.next();
-		switch(c) {
-		case "1":
-			showFilelist();break;
-		case "2":
-			downloadFile();break;
-		case "3":
-			uploadFile();break;
-		case "4":
-			showMenu();break;
-		case "5":
-			changeSelfInfo();break;
-		case "6":
-			return;
-		}
-		}
-	}
-	public String chooseFile(String file) {
-		File f = new File(file);
-		Scanner in = new Scanner(System.in);
-		if(f.isFile()) {
-			return file;
-		}
-		Map map = new HashMap();
-		File[] ft = (new File(file).listFiles());
-		int cnt = 1;
-		System.out.println("编号\t文件(或文件夹)");
-		for(File t:ft) {
-			System.out.println(cnt+ "\t"+t.getName());
-			map.put(cnt++,t.getName());
-		}
-		System.out.println(cnt+"\t[结束]");
-		int chice = in.nextInt();
-		String filetemp = map.get(chice).toString();
-		return chooseFile(new String(file+"\\"+filetemp));
 	}
 }

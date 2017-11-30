@@ -8,30 +8,12 @@ public class User {
 	private String role;
 	public void showMenu() throws IllegalStateException, SQLException {}
 	public boolean changeUserInfo(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException{return false;}
-	public static boolean addUser(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException {return false;};
-	public static String[] listUser() throws IllegalStateException, SQLException {return null;}
-	public static boolean deUser(String userName) throws IllegalStateException, SQLException {return false;}
 	public boolean uploadFile(String ID,String description,String file) throws IllegalStateException, SQLException {return false;}
-	public static String[] showFilelist() throws IllegalStateException, SQLException {
-		Enumeration<Doc> e = DataProcessing.getAllDocs();
-		System.out.println("编号\t所有者\t时间\t\t\t描述\t\t文件名");
-		int cnt = 0;
-		while(e.hasMoreElements()){
-			Doc user = e.nextElement();
-			cnt++;
-	     }
-		String[] temp = new String[cnt];
-		Enumeration<Doc> d = DataProcessing.getAllDocs();
-		int c = 0;
-		while(d.hasMoreElements()){
-			Doc user = d.nextElement();
-			temp[c++] = new String(user.getNumber()+"    "+user.getPath()+"    "+user.getOwner()+"      "+user.getTimestamp());
-	     }
-		return temp;
+	public boolean deUser(String userName) throws IllegalStateException, SQLException {	return false;}
+	public Doc[] showFilelist() throws IllegalStateException, SQLException {
+		return DataProcessing.getAllDocs();
 	}
 	public boolean downloadFile(String num,String downloadpath) throws IllegalStateException, SQLException {
-		
-		System.out.println(num);
 		Doc doc = DataProcessing.searchDoc(num);
 		if(doc != null) {
 			String sourcepath = "C:\\sql\\"+doc.getOwner();
@@ -109,29 +91,12 @@ public class User {
 	public String getRole() {
 		return role;
 	}
-	public String chooseFolder(String file) {
-		File f = new File(file);
-		Scanner in = new Scanner(System.in);
-		if(f.isFile()) {
-			System.out.println("选择路径是文件，返回父目录!");
-			return file;
-		}
-		Map map = new HashMap();
-		File[] ft = (new File(file).listFiles());
-		int cnt = 1;
-		System.out.println("编号\t文件(或文件夹)");
-		for(File t:ft) {
-			System.out.println(cnt+ "\t"+t.getName());
-			map.put(cnt++,t.getName());
-		}
-		System.out.println(cnt+"\t[结束]");
-		int chice = in.nextInt();
-		if(chice >= cnt) {
-			return file;
-		}
-		else{
-			String filetemp = map.get(chice).toString();
-			return chooseFolder(new String(file+"\\"+filetemp));
-		}
+	public User[] listUser() throws IllegalStateException, SQLException {
+		return null;
 	}
+	public boolean addUser(String name2, String pass, String role2) throws IllegalStateException, SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }
