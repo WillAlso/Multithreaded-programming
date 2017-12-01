@@ -332,7 +332,7 @@ class Login implements ActionListener{
 			 bt.addActionListener(new ActionListener() {
 				 public void actionPerformed(ActionEvent arg0){
 					 if(list_ad.getSelectedRow() != -1){
-						 String str= (String) list_ad.getValueAt(list_ad.getSelectedRow(), 4);
+						 String str= (String) list_ad.getValueAt(list_ad.getSelectedRow(), 0);
 						 String downFile = str;
 						 JFrame fe = new JFrame();
 						 fe.setBounds(100, 100, 450, 300);
@@ -352,6 +352,7 @@ class Login implements ActionListener{
 											}
 											else{
 												JLabel tl = new JLabel("œ¬‘ÿ ß∞‹");
+												System.out.println(file.getAbsolutePath());
 											 tl.setBounds(133, 176, 54, 15);
 											 mainPane.add(tl);
 											}
@@ -721,6 +722,7 @@ class Login implements ActionListener{
 						System.exit(0);
 					} catch (SQLException g1) {
 						System.out.println("Not Connected to Database");
+						g1.printStackTrace();
 						System.exit(0);
 					}
 				}

@@ -95,7 +95,6 @@ public class User {
 		return null;
 	}
 	public boolean addUser(String name2, String pass, String role2) throws IllegalStateException, SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

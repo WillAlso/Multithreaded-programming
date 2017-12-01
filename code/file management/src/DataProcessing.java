@@ -72,8 +72,10 @@ public  class DataProcessing {
 	
 	public static boolean insertDoc(String ID, String creator, Timestamp timestamp, String description, String filename) throws SQLException,IllegalStateException{
 		Doc doc;	
-		String sql = "INSERT INTO doc VOLUES ('"+ID+"','"+creator+"',"+timestamp+",'"+description+"','"+filename+"')";
-		if(st.execute(sql)){
+		String sql = "INSERT INTO doc VALUES ('"+ID+"','"+creator+"',"+"?"+",'"+description+"','"+filename+"')";
+		PreparedStatement pstmt = con.prepareStatement(sql);  
+		pstmt.setTimestamp(1, timestamp);
+		if(pstmt.execute()){
 			return true;
 		}
 		return false;
@@ -126,7 +128,7 @@ public  class DataProcessing {
 	public static boolean updateUser(String name, String password, String role) throws SQLException,IllegalStateException{
 		if ( !connectToDB ) 
 			throw new IllegalStateException( "Not Connected to Database" );
-		String sql = "UPDATE user SET username = '"+name+"' password = '"+password+"' role = '"+role+"' WHERER username = '"+name+"'";
+		String sql = "UPDATE user SET username = '"+name+"',password = '"+password+"',role = '"+role+"' WHERE username = '"+name+"'";
 		if(st.execute(sql)){
 			return true;
 		}
