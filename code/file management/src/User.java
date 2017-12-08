@@ -8,14 +8,23 @@ public class User {
 	private String role;
 	public void showMenu() throws IllegalStateException, SQLException {}
 	public boolean changeUserInfo(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException{return false;}
-	public boolean uploadFile(String ID,String description,String file) throws IllegalStateException, SQLException {return false;}
-	public boolean deUser(String userName) throws IllegalStateException, SQLException {	return false;}
+	public boolean uploadFile(String ID,String description,String file) throws IllegalStateException, SQLException {
+		if((new Operator(name,password,role)).uploadFile(ID,description,file)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public boolean deUser(String userName) throws IllegalStateException, SQLException {return false;}
 	public Doc[] showFilelist() throws IllegalStateException, SQLException {
 		return DataProcessing.getAllDocs();
 	}
 	public boolean downloadFile(String num,String downloadpath) throws IllegalStateException, SQLException {
 		Doc doc = DataProcessing.searchDoc(num);
+		
 		if(doc != null) {
+			System.out.println(doc.getPath());
 			String sourcepath = "C:\\sql\\"+doc.getOwner();
 			File sourcefile = new File(sourcepath+"\\"+doc.getPath());
 			System.out.println(sourcefile.getAbsolutePath());

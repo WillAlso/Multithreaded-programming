@@ -1,14 +1,10 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JDesktopPane;
-import java.awt.BorderLayout;
-import javax.swing.JTable;
 
-public class demo {
+public class demo4 {
 
 	private JFrame frame;
-	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -17,7 +13,7 @@ public class demo {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					demo window = new demo();
+					demo4 window = new demo4();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,7 +25,7 @@ public class demo {
 	/**
 	 * Create the application.
 	 */
-	public demo() {
+	public demo4() {
 		initialize();
 	}
 
@@ -38,14 +34,8 @@ public class demo {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 598, 408);
+		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JDesktopPane desktopPane = new JDesktopPane();
-		frame.getContentPane().add(desktopPane, BorderLayout.CENTER);
-		
-		table = new JTable();
-		table.setBounds(191, 112, 191, 143);
-		desktopPane.add(table);
 	}
+
 }

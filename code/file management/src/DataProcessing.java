@@ -13,13 +13,11 @@ public  class DataProcessing {
 	private ResultSet rs;
 	private int numberofRows;
 	private static boolean connectToDB=false;
-	
 	static {
 		Init();
 	}
-	
 	public static  void Init(){
-		String url = "jdbc:mysql://localhost:3306/foruser";
+		String url = "jdbc:mysql://localhost:3306/foruser?characterEncoding=utf-8";
 		String username = "root";
 		String password = "12345678";
 		try {
@@ -36,9 +34,8 @@ public  class DataProcessing {
 			e.printStackTrace();
 		}
 	}
-	
 	public static Doc searchDoc(String ID) throws SQLException,IllegalStateException {
-		if ( !connectToDB ) 
+		if ( !connectToDB )
 	        throw new IllegalStateException( "Not Connected to Database" );
 		String sql = "SELECT * FROM doc WHERE number = '"+ID+"'";
 		ResultSet result = st.executeQuery(sql);
@@ -48,7 +45,6 @@ public  class DataProcessing {
 		}
 		return null;
 	}
-	
 	public static Doc[] getAllDocs() throws SQLException,IllegalStateException{
 		if ( !connectToDB ) 
 	        throw new IllegalStateException( "Not Connected to Database" );
@@ -60,7 +56,7 @@ public  class DataProcessing {
 		int c = 0;
 		String ID;
 		do{
-			 ID = result.getString(1);
+			 ID = result.getString(2);
 			String owner = result.getString("owner");
 			Timestamp time = result.getTimestamp("timestamp");
 			String des = result.getString("description");
@@ -69,19 +65,18 @@ public  class DataProcessing {
 		}while(result.next());
 		return doc;
 	} 
-	
 	public static boolean insertDoc(String ID, String creator, Timestamp timestamp, String description, String filename) throws SQLException,IllegalStateException{
-		Doc doc;	
-		String sql = "INSERT INTO doc VALUES ('"+ID+"','"+creator+"',"+"?"+",'"+description+"','"+filename+"')";
-		PreparedStatement pstmt = con.prepareStatement(sql);  
+		Doc doc;
+		String sql = "INSERT INTO doc(number,owner,timestamp,description,filename) VALUES ('"+ID+"','"+creator+"',"+"?"+",'"+description+"','"+filename+"')";
+		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setTimestamp(1, timestamp);
-		if(pstmt.execute()){
+		try{
+			pstmt.execute();
 			return true;
+		}catch (Exception e){
+			return false;
 		}
-		return false;
 	} 
-	
-	
 	public static User searchUser(String name, String password) throws SQLException,IllegalStateException {
 		if ( !connectToDB ) 
 	        throw new IllegalStateException( "Not Connected to Database" );
@@ -101,7 +96,6 @@ public  class DataProcessing {
 		}
 		return null;
 	}
-	
 	public  static User[] getAllUser() throws SQLException,IllegalStateException{
 		if ( !connectToDB ) 
 	        throw new IllegalStateException( "Not Connected to Database" );
@@ -122,40 +116,38 @@ public  class DataProcessing {
 		}while(result.next());
 		return temp;
 	}
-	
-	
-	
 	public static boolean updateUser(String name, String password, String role) throws SQLException,IllegalStateException{
 		if ( !connectToDB ) 
 			throw new IllegalStateException( "Not Connected to Database" );
 		String sql = "UPDATE user SET username = '"+name+"',password = '"+password+"',role = '"+role+"' WHERE username = '"+name+"'";
-		if(st.execute(sql)){
+		try{
+			st.execute(sql);
 			return true;
+		}catch(Exception s){
+			return false;
 		}
-		return false;
 	}
-	
 	public static boolean insertUser(String name, String password, String role) throws SQLException,IllegalStateException{
 		User user;
 		if ( !connectToDB ) 
 			throw new IllegalStateException( "Not Connected to Database" );
-		String sql = "INSERT INTO user VALUES ('"+name+"','"+password+"','"+role+"')";
-		if(st.execute(sql)){
+		String sql = "INSERT INTO user (username,password,role) VALUES ('"+name+"','"+password+"','"+role+"')";
+		try{
+			st.execute(sql);
 			return true;
+		}catch(Exception e){
+			return false;
 		}
-		return false;
 	}
-	
 	public static boolean deleteUser(String name) throws SQLException,IllegalStateException{
 		if ( !connectToDB ) 
 	        throw new IllegalStateException( "Not Connected to Database" );
 		String sql = "DELETE FROM user WHERE username = '"+name+"'";
-		if (st.execute(sql)){
+		try {
+			st.execute(sql);
 			return true;
-		}else
+		}catch(Exception e){
 			return false;
-	}	
-            
-	
-           
+		}
+	}   
 }

@@ -1,6 +1,8 @@
 ﻿import java.io.*;
 import java.sql.*;
 import java.util.*;
+import java.net.*;
+
 
 public class Operator extends User{
 	public Operator(String name,String password,String role){
@@ -24,7 +26,7 @@ public class Operator extends User{
 		}
 		System.out.println(ID+" "+getName()+description+ fin.getAbsolutePath());
 		System.out.println(ID+" "+getName()+description+ fout.getAbsolutePath());
-		if(!DataProcessing.insertDoc(ID, getName(), timestamp, description, fin.getName())) {
+		if(DataProcessing.insertDoc(ID, getName(), timestamp, description, fin.getName())) {
 			double len = (double)(fin.length())/50;
 			double cnt = 0;
 			FileInputStream is;
