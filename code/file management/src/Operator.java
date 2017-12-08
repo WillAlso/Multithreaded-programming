@@ -11,22 +11,15 @@ public class Operator extends User{
 		setRole(role);
 	}
 	public boolean uploadFile(String ID,String description,String file) throws IllegalStateException, SQLException {
-		File folder = new File("C:\\sql\\"+getName());
-		if(!folder.exists())
-			folder.mkdirs();
+		final String SERVER_IP ="127.0.0.1";
+	    final int SERVER_PORT =2017;
+	    Socket client = null;
+	    FileInputStream fis = null;
+	    DataOutputStream dos = null;
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 		File fin = new File(file);
-		File fout = new File("C:\\sql\\"+getName()+"\\"+fin.getName());
-		if(fout.exists()) {
-			System.out.println("文件存在，是否继续？");
-			Scanner input2 = new Scanner(System.in);
-			String c = input2.nextLine();
-			if(!(c.equals("y")||c.equals("Y")))
-				return false;
-		}
-		System.out.println(ID+" "+getName()+description+ fin.getAbsolutePath());
-		System.out.println(ID+" "+getName()+description+ fout.getAbsolutePath());
 		if(DataProcessing.insertDoc(ID, getName(), timestamp, description, fin.getName())) {
+			/*
 			double len = (double)(fin.length())/50;
 			double cnt = 0;
 			FileInputStream is;
@@ -48,11 +41,44 @@ public class Operator extends User{
 			} catch (Exception e) {
 				System.out.println("文件操作错误!\n");
 				return false;
-			}
+			}*/
+			 try {
+		            try {
+		                client =new Socket(SERVER_IP, SERVER_PORT);
+		                fis =new FileInputStream(fin);
+		                dos =new DataOutputStream(client.getOutputStream());
+		                dos.writeInt(1);
+		                dos.flush();
+		                dos.writeUTF(fin.getName());
+		                dos.flush();
+		                dos.writeLong(fin.length());
+		                dos.flush();
+		                dos.writeUTF(getName());
+		                dos.flush();
+		                
+		                byte[] sendBytes =new byte[1024];
+		                int length =0;
+		                while((length = fis.read(sendBytes,0, sendBytes.length)) >0){
+		                    dos.write(sendBytes,0, length);
+		                    dos.flush();
+		                }
+		            }catch (Exception e) {
+		                e.printStackTrace();
+		                return false;
+		            }finally{
+		                if(fis !=null)
+		                    fis.close();
+		                if(dos !=null)
+		                    dos.close();
+		                client.close();
+		            }
+		        }catch (Exception e) {
+		            e.printStackTrace();
+		        }
 		}
 		else {
-			System.out.println("上传失败!");
 			return false;
 		}
+        return true;
 	}
 }
