@@ -4,9 +4,7 @@ import java.io.*;
 import java.net.*;
 
 public class Server extends ServerSocket {
-
 	private static final int PORT = 2017;
-
 	private ServerSocket server;
 	private Socket client;
 	private DataInputStream dis;
@@ -49,8 +47,6 @@ public class Server extends ServerSocket {
 						String fileName = dis.readUTF();
 						String folderutf = dis.readUTF();
 						File temp = new File("C:\\sql\\" + folderutf + "\\" + fileName);
-						dos.writeLong(temp.length());
-						dos.flush();
 						fis = new FileInputStream(temp);
 						System.out.println(new File("C:\\sql\\" + folderutf + "\\" + fileName).getAbsolutePath());
 		                byte[] sendBytes =new byte[1024];
@@ -59,7 +55,8 @@ public class Server extends ServerSocket {
 		                    dos.write(sendBytes,0, length);
 		                    dos.flush();
 		                }
-		                System.out.println("发送层高");
+		                System.out.println("发送成功");
+		                client.close();
 					}
 				}
 			} catch (Exception e) {

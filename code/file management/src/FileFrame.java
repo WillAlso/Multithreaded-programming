@@ -209,7 +209,11 @@ class Login implements ActionListener, KeyListener {
 		JLabel lab4 = new JLabel(user.getName());
 		lab4.setForeground(Color.WHITE);
 		lab4.setBounds(70, 35, 60, 30);
+		JLabel lab5 = new JLabel(user.getRole());
+		lab5.setForeground(Color.WHITE);
+		lab5.setBounds(70, 55, 90, 30);
 		mainPane.add(lab4);
+		mainPane.add(lab5);
 		mainPane.add(lab3);
 		mainPane.add(lab2);
 		mainPane.add(btn);
@@ -242,69 +246,223 @@ class Login implements ActionListener, KeyListener {
 	public void res_op() {
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
+		ImageIcon icon = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\back.png");
+		JLabel labtemp = new JLabel(icon);
+		labtemp1 = new JLabel();
+		labtemp1.setOpaque(true);
+		labtemp1.setBackground(new Color(236, 242, 247));
+		labtemp1.setBounds(0, 90, frame.getWidth(), 40);
 		mBar = new JMenuBar();
-		mBar.setBounds(0, 0, frame.getWidth(), 25);
+		mBar.setBorderPainted(false);
+		mBar.setBackground(new Color(6, 130, 230));
+		mBar.setBounds(frame.getWidth() - 110, 0, 35, 20);
 		menu1 = new JMenu("菜单");
-		menu2 = new JMenu("系统");
-		mil1 = new JMenuItem("返回主页");
-		mil2 = new JMenuItem("账户信息");
-		mil3 = new JMenuItem("关闭");
-		mil4 = new JMenuItem("帮助");
+		mil1 = new JMenuItem("账户");
+		mil2 = new JMenuItem("注销");
+		mil3 = new JMenuItem("帮助");
+		mil4 = new JMenuItem("反馈");
 		mil5 = new JMenuItem("关于");
-		mil6 = new JMenuItem("反馈");
-		btn = new JButton("文件列表");
-		btn_1 = new JButton("下载文件");
-		btn_8 = new JButton("上传文件");
-		btn.setBounds(20, 50, 90, 20);
-		btn_1.setBounds(20, 80, 90, 20);
-		btn_8.setBounds(20, 110, 90, 20);
+		mil6 = new JMenuItem("退出");
+		btn_3 = new JButton("删除用户");
+		JButton btn_min = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winmin.png"));
+		btn_min.setBounds(frame.getWidth() - 80, 0, 30, 20);
+		JButton btn_win = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\win.png"));
+		btn_win.setBounds(frame.getWidth() - 55, 0, 30, 20);
+		JButton btn_close = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winclo.png"));
+		btn_close.setBounds(frame.getWidth() - 30, 0, 30, 20);
+		btn_min.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setExtendedState(JFrame.ICONIFIED);
+			}
+		});
+		btn_close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btn_win.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (frame.getWidth() <= 900) {
+					frame.setLocation(0, 0);
+					frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+					// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				} else {
+					frame.setLocation(100, 100);
+					frame.setSize(900, 650);
+				}
+				frame.remove(mainPane);
+				res_ad();
+				frame.add(mainPane);
+				frame.validate();
+			}
+		});
+
+		frame.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				origin.x = e.getX();
+				origin.y = e.getY();
+			}
+		});
+		frame.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = frame.getLocation();
+				frame.setLocation(p.x + e.getX() - origin.x, p.y + e.getY() - origin.y);
+			}
+		});
+		mainPane.add(btn_min);
+		mainPane.add(btn_win);
+		mainPane.add(btn_close);
+		ImageIcon icon1 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\1.png");
+		btn = new JButton(icon1);
+		btn.setBounds(300, 0, 90, 90);
+		ImageIcon icon2 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.gif");
+		JLabel lab2 = new JLabel(icon2);
+		lab2.setBounds(5, 0, 30, 30);
+		ImageIcon icon3 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\default.jpg");
+		JLabel lab3 = new JLabel(icon3);
+		lab3.setBounds(5, 30, 60, 60);
+		ImageIcon icon4 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.png");
+		btn_1 = new JButton(icon4);
+		btn_1.setBounds(10, 95, 80, 30);
+		btn_8 = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\4.png"));
+		btn_8.setBounds(100, 95, 80, 30);
+		JLabel lab4 = new JLabel(user.getName());
+		lab4.setForeground(Color.WHITE);
+		lab4.setBounds(70, 35, 60, 30);
+		JLabel lab5 = new JLabel(user.getRole());
+		lab5.setForeground(Color.WHITE);
+		lab5.setBounds(70, 55, 90, 30);
+		mainPane.add(lab4);
+		mainPane.add(lab5);
+		mainPane.add(lab3);
+		mainPane.add(lab2);
+		mainPane.add(btn);
+		labtemp.setBounds(0, 0, frame.getWidth(), 90);
 		menu1.add(mil1);
 		menu1.add(mil2);
-		menu2.add(mil3);
-		menu2.add(mil4);
-		menu2.add(mil5);
-		menu2.add(mil6);
+		menu1.add(mil3);
+		menu1.add(mil4);
+		menu1.add(mil5);
+		menu1.add(mil6);
 		mBar.add(menu1);
-		mBar.add(menu2);
 		mainPane.add(mBar);
-		mainPane.add(btn);
 		mainPane.add(btn_1);
 		mainPane.add(btn_8);
+		mainPane.add(labtemp);
+		mainPane.add(labtemp1);
 		mil1.addActionListener(this);
+		mil2.addActionListener(this);
+		mil3.addActionListener(this);
+		mil4.addActionListener(this);
 		mil6.addActionListener(this);
 		btn.addActionListener(this);
 		btn_1.addActionListener(this);
 		btn_8.addActionListener(this);
 	}
-
 	public void res_br() {
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
+		ImageIcon icon = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\back.png");
+		JLabel labtemp = new JLabel(icon);
+		labtemp1 = new JLabel();
+		labtemp1.setOpaque(true);
+		labtemp1.setBackground(new Color(236, 242, 247));
+		labtemp1.setBounds(0, 90, frame.getWidth(), 40);
 		mBar = new JMenuBar();
-		mBar.setBounds(0, 0, frame.getWidth(), 25);
+		mBar.setBorderPainted(false);
+		mBar.setBackground(new Color(6, 130, 230));
+		mBar.setBounds(frame.getWidth() - 110, 0, 35, 20);
 		menu1 = new JMenu("菜单");
-		menu2 = new JMenu("系统");
-		mil1 = new JMenuItem("返回主页");
-		mil2 = new JMenuItem("账户信息");
-		mil3 = new JMenuItem("关闭");
-		mil4 = new JMenuItem("帮助");
+		mil1 = new JMenuItem("账户");
+		mil2 = new JMenuItem("注销");
+		mil3 = new JMenuItem("帮助");
+		mil4 = new JMenuItem("反馈");
 		mil5 = new JMenuItem("关于");
-		mil6 = new JMenuItem("反馈");
-		btn = new JButton("文件列表");
-		btn_1 = new JButton("下载文件");
-		btn.setBounds(20, 50, 90, 20);
-		btn_1.setBounds(20, 80, 90, 20);
+		mil6 = new JMenuItem("退出");
+		btn_3 = new JButton("删除用户");
+		JButton btn_min = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winmin.png"));
+		btn_min.setBounds(frame.getWidth() - 80, 0, 30, 20);
+		JButton btn_win = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\win.png"));
+		btn_win.setBounds(frame.getWidth() - 55, 0, 30, 20);
+		JButton btn_close = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winclo.png"));
+		btn_close.setBounds(frame.getWidth() - 30, 0, 30, 20);
+		btn_min.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setExtendedState(JFrame.ICONIFIED);
+			}
+		});
+		btn_close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btn_win.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (frame.getWidth() <= 900) {
+					frame.setLocation(0, 0);
+					frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+					// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				} else {
+					frame.setLocation(100, 100);
+					frame.setSize(900, 650);
+				}
+				frame.remove(mainPane);
+				res_ad();
+				frame.add(mainPane);
+				frame.validate();
+			}
+		});
+
+		frame.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				origin.x = e.getX();
+				origin.y = e.getY();
+			}
+		});
+		frame.addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				Point p = frame.getLocation();
+				frame.setLocation(p.x + e.getX() - origin.x, p.y + e.getY() - origin.y);
+			}
+		});
+		mainPane.add(btn_min);
+		mainPane.add(btn_win);
+		mainPane.add(btn_close);
+		ImageIcon icon1 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\1.png");
+		btn = new JButton(icon1);
+		btn.setBounds(300, 0, 90, 90);
+		ImageIcon icon2 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.gif");
+		JLabel lab2 = new JLabel(icon2);
+		lab2.setBounds(5, 0, 30, 30);
+		ImageIcon icon3 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\default.jpg");
+		JLabel lab3 = new JLabel(icon3);
+		lab3.setBounds(5, 30, 60, 60);
+		ImageIcon icon4 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.png");
+		btn_1 = new JButton(icon4);
+		btn_1.setBounds(10, 95, 80, 30);
+		JLabel lab4 = new JLabel(user.getName());
+		lab4.setForeground(Color.WHITE);
+		lab4.setBounds(70, 35, 60, 30);
+		JLabel lab5 = new JLabel(user.getRole());
+		lab5.setForeground(Color.WHITE);
+		lab5.setBounds(70, 55, 90, 30);
+		mainPane.add(lab4);
+		mainPane.add(lab5);
+		mainPane.add(lab3);
+		mainPane.add(lab2);
+		mainPane.add(btn);
+		labtemp.setBounds(0, 0, frame.getWidth(), 90);
 		menu1.add(mil1);
 		menu1.add(mil2);
-		menu2.add(mil3);
-		menu2.add(mil4);
-		menu2.add(mil5);
-		menu2.add(mil6);
+		menu1.add(mil3);
+		menu1.add(mil4);
+		menu1.add(mil5);
+		menu1.add(mil6);
 		mBar.add(menu1);
-		mBar.add(menu2);
 		mainPane.add(mBar);
-		mainPane.add(btn);
 		mainPane.add(btn_1);
+		mainPane.add(labtemp);
+		mainPane.add(labtemp1);
 		mil1.addActionListener(this);
 		mil2.addActionListener(this);
 		mil3.addActionListener(this);
@@ -396,11 +554,11 @@ class Login implements ActionListener, KeyListener {
 			System.exit(0);
 		} else if (e.getSource() == btn) { // 文件列表
 			frame.remove(mainPane);
-			if (flag == 2) {
+			if (flag == 3) {
 				res_ad();
-			} else if (flag == 1) {
+			} else if (flag == 2) {
 				res_op();
-			} else if (flag == 0) {
+			} else if (flag == 1) {
 				res_br();
 			}
 			Doc[] m = null;
@@ -651,11 +809,11 @@ class Login implements ActionListener, KeyListener {
 			frame_user.setVisible(true);
 		} else if (e.getSource() == btn_5) { // 用户列表
 			frame.remove(mainPane);
-			if (flag == 2) {
+			if (flag == 3) {
 				res_ad();
-			} else if (flag == 1) {
+			} else if (flag == 2) {
 				res_op();
-			} else if (flag == 0) {
+			} else if (flag == 1) {
 				res_br();
 			}
 			btn_3 = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\5.png"));
@@ -821,13 +979,9 @@ class Login implements ActionListener, KeyListener {
 			System.exit(0);
 		}
 	}
-
 	public void keyPressed(KeyEvent e) {
-
 	}
-
 	public void keyReleased(KeyEvent e) {
-
 	}
 
 	public void keyTyped(KeyEvent e) {

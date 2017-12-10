@@ -53,20 +53,16 @@ public class User {
 				dos.flush();
 					fos = new FileOutputStream(new File(downloadpath + "\\" + doc.getPath()));
 					byte[] sendBytes = new byte[1024];
-					long length = dis.readLong();
 					long cnt = 0;
 					while (true) {
 						int read = 0;
-						if(cnt >= length){
+						read = dis.read(sendBytes);
+						if (read == -1)
 							break;
-						}
-						if(dis.available() == 0)
 						read = dis.read(sendBytes);
 						fos.write(sendBytes, 0, read);
 						fos.flush();
-						cnt += read;
 					}
-				System.out.println("接受成功");
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
