@@ -1,8 +1,7 @@
-﻿import java.sql.*;
-import java.util.*;
+﻿package Client;
 
 public class Browser extends User{
-	Browser(String name,String password,String role){
+	public Browser(String name,String password,String role){
 		setName(name);
 		setPassword(password);
 		setRole(role);

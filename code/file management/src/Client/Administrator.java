@@ -1,13 +1,15 @@
-﻿import java.sql.*;
-import java.util.*;
+﻿package Client;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.sql.*;
 
 public class Administrator extends User{
-	Administrator(String name,String password,String role){
+	public Administrator(String name,String password,String role){
 		setName(name);
 		setPassword(password);
 		setRole(role);
 	}
-	public boolean changeUserInfo(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException {
+	public boolean changeUserInfo(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException, IOException {
 		if(DataProcessing.updateUser(userName, userPassword, userRole)) {
 			System.out.println(userName +" 信息更新成功 !");
 			return true;
@@ -17,7 +19,7 @@ public class Administrator extends User{
 			return false;
 		}
 	}
-	public boolean deUser(String userName) throws IllegalStateException, SQLException {
+	public boolean deUser(String userName) throws IllegalStateException, SQLException, IOException {
 			if(DataProcessing.deleteUser(userName)) {
 				System.out.println(userName +"删除成功");
 				return true;
@@ -27,7 +29,7 @@ public class Administrator extends User{
 				return false;
 			}
 	}
-	public boolean addUser(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException {
+	public boolean addUser(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException, UnknownHostException, IOException {
 		
 		if(DataProcessing.insertUser(userName, userPassword, userRole)) {
 			System.out.println(userName + "添加成功!");
@@ -38,7 +40,7 @@ public class Administrator extends User{
 			return false;
 		}
 	}
-	public User[] listUser() throws IllegalStateException, SQLException {
+	public User[] listUser() throws IllegalStateException, SQLException, UnknownHostException, IOException {
 		return DataProcessing.getAllUser();
 	}
 }

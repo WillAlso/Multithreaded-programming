@@ -1,10 +1,10 @@
+package Client;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.sql.*;
 import javax.swing.*;
-
-import com.sun.awt.AWTUtilities;
 
 public class FileFrame {
 	public static void main(String args[]) {
@@ -16,8 +16,6 @@ class Login implements ActionListener, KeyListener {
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	private JTextField textField_1;
-	private JPasswordField passwordField_1;
 	private JTextField textField_2;
 	private JPasswordField passwordField_2;
 	private JPasswordField passwordField_3;
@@ -31,7 +29,6 @@ class Login implements ActionListener, KeyListener {
 	private File file;
 	private JMenuBar mBar;
 	private JMenu menu1;
-	private JMenu menu2;
 	private JMenuItem mil1;
 	private JMenuItem mil2;
 	private JMenuItem mil3;
@@ -53,6 +50,7 @@ class Login implements ActionListener, KeyListener {
 	private User user;
 	private JLabel labtemp1;
 	static Point origin = new Point();
+
 	public Login() {
 		ImageIcon icon = new ImageIcon("E:\\×ÊÁÏ\\java\\Multithreaded-programming\\icon\\2.gif");
 		JLabel lab = new JLabel(icon);
@@ -120,6 +118,7 @@ class Login implements ActionListener, KeyListener {
 		}
 		frame.setVisible(true);
 	}
+
 	public void res_ad() {
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
@@ -359,6 +358,7 @@ class Login implements ActionListener, KeyListener {
 		btn_1.addActionListener(this);
 		btn_8.addActionListener(this);
 	}
+
 	public void res_br() {
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
@@ -527,6 +527,8 @@ class Login implements ActionListener, KeyListener {
 						System.out.println("Not Connected to Database");
 						g1.printStackTrace();
 						System.exit(0);
+					} catch (IOException e1) {
+						System.exit(0);
 					}
 				}
 			});
@@ -545,7 +547,7 @@ class Login implements ActionListener, KeyListener {
 			user = null;
 			frame.add(desktopPane);
 			frame.validate();
-		} else if (e.getSource() == mil3) { 
+		} else if (e.getSource() == mil3) {
 		} else if (e.getSource() == mil4) {
 
 		} else if (e.getSource() == mil5) {
@@ -574,7 +576,7 @@ class Login implements ActionListener, KeyListener {
 					data[i][4] = m[i].getPath();
 				}
 				list_ad = new JTable(data, column);
-			} catch (IllegalStateException | SQLException e1) {
+			} catch (IllegalStateException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
 			list_ad.setBounds(150, 150, frame.getWidth() - 200 - 20, m.length * 20);
@@ -610,7 +612,7 @@ class Login implements ActionListener, KeyListener {
 								if (user.downloadFile(downFile, file.getAbsolutePath())) {
 								} else {
 								}
-							} catch (IllegalStateException | SQLException e1) {
+							} catch (IllegalStateException | SQLException | IOException e1) {
 								e1.printStackTrace();
 							}
 						}
@@ -645,7 +647,7 @@ class Login implements ActionListener, KeyListener {
 			userPane.add(lblNewLabel_3);
 			textField_2 = new JTextField();
 			textField_2.setBounds(70, 20, 105, 20);
-			if(name != null){
+			if (name != null) {
 				textField_2.setText(name);
 			}
 			userPane.add(textField_2);
@@ -656,11 +658,17 @@ class Login implements ActionListener, KeyListener {
 			li_1 = new JList<String>(m);
 			li_1.setBounds(20, 80, 350, 60);
 			userPane.add(li_1);
-			if(role1 != null){
-				switch(role1){
-				case "administrator":li_1.setSelectedIndex(0);break;
-				case "operator":li_1.setSelectedIndex(1);break;
-				case "browser":li_1.setSelectedIndex(2);break;
+			if (role1 != null) {
+				switch (role1) {
+				case "administrator":
+					li_1.setSelectedIndex(0);
+					break;
+				case "operator":
+					li_1.setSelectedIndex(1);
+					break;
+				case "browser":
+					li_1.setSelectedIndex(2);
+					break;
 				default:
 					li_1.clearSelection();
 				}
@@ -704,7 +712,7 @@ class Login implements ActionListener, KeyListener {
 							li_1.clearSelection();
 							frame_user.dispose();
 						}
-					} catch (IllegalStateException | SQLException e) {
+					} catch (IllegalStateException | SQLException | IOException e) {
 						e.printStackTrace();
 					}
 				}
@@ -735,7 +743,7 @@ class Login implements ActionListener, KeyListener {
 					} else {
 						li_2.clearSelection();
 					}
-				} catch (IllegalStateException | SQLException s) {
+				} catch (IllegalStateException | SQLException | IOException s) {
 					s.printStackTrace();
 				}
 			}
@@ -800,7 +808,7 @@ class Login implements ActionListener, KeyListener {
 							li_1.clearSelection();
 							frame_user.dispose();
 						}
-					} catch (IllegalStateException | SQLException e) {
+					} catch (IllegalStateException | SQLException | IOException e) {
 						e.printStackTrace();
 					}
 				}
@@ -839,7 +847,7 @@ class Login implements ActionListener, KeyListener {
 					data[i][1] = m[i].getRole();
 				}
 				li_2 = new JTable(data, column);
-			} catch (IllegalStateException | SQLException e1) {
+			} catch (IllegalStateException | SQLException | IOException e1) {
 				e1.printStackTrace();
 			}
 			li_2.setBounds(150, 150, frame.getWidth() - 200 - 20, m.length * 20);
@@ -913,7 +921,7 @@ class Login implements ActionListener, KeyListener {
 										file = null;
 										frame_up.dispose();
 									}
-								} catch (IllegalStateException | SQLException e1) {
+								} catch (IllegalStateException | SQLException | IOException e1) {
 									e1.printStackTrace();
 								}
 							}
@@ -974,13 +982,17 @@ class Login implements ActionListener, KeyListener {
 				System.out.println("Not Connected to Database");
 				g.printStackTrace();
 				System.exit(0);
+			} catch (IOException e1) {
+				System.exit(0);
 			}
 		} else if (e.getSource() == button_1) {
 			System.exit(0);
 		}
 	}
+
 	public void keyPressed(KeyEvent e) {
 	}
+
 	public void keyReleased(KeyEvent e) {
 	}
 
