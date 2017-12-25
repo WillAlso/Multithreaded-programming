@@ -114,35 +114,51 @@ public class Server extends ServerSocket{
 									Timestamp time = result.getTimestamp("timestamp");
 									String des = result.getString("description");
 									String name = result.getString("filename");
-
 									oos.writeObject(new Doc(ID, owner, time, des, name));
 									oos.flush();
 								} while (result.next());
 								client.close();
 							} else if (chioce == 5) {// insertDoc
+								String maker = dis.readUTF();
+								System.out.println(maker);
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 								ois = new ObjectInputStream(client.getInputStream());
 								Doc doc = (Doc) ois.readObject();
+								String made = doc.getPath();
+								String event = "上传文件";
 								String sql = "INSERT INTO doc(number,owner,timestamp,description,filename) VALUES ('"
 										+ doc.getNumber() + "','" + doc.getOwner() + "'," + "?" + ",'" + doc.getDescription()
 										+ "','" + doc.getPath() + "')";
+								String sql1 = "INSERT INTO log(maker,made,event,time) VALUES('"+maker+"','"+made+"','"+event+"',"+"?)";
 								PreparedStatement pstmt = con.prepareStatement(sql);
 								pstmt.setTimestamp(1, doc.getTimestamp());
+								PreparedStatement pstmt1 = con.prepareStatement(sql1);
+								pstmt1.setTimestamp(1, timestamp);
 								dos = new DataOutputStream(client.getOutputStream());
 								try {
 									pstmt.execute();
+									pstmt1.execute();
 									dos.writeBoolean(true);
 								} catch (Exception e) {
 									dos.writeBoolean(false);
 								}
 								client.close();
 							} else if (chioce == 6) {// searchUser
-								System.out.println("cahf");
 								String name = dis.readUTF();
 								String password1 = dis.readUTF();
+								String maker = new String(name);
+								String made = new String(name);
+								String event = "登录";
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+								String sql1 = "INSERT INTO log(maker,made,event,time) VALUES('"+maker+"','"+made+"','"+event+"',"+"?)";
 								System.out.println(name + password1);
 								if (!connectToDB)
 									throw new IllegalStateException("Not Connected to Database");
 								String sql = "SELECT * FROM user WHERE username = '" + name + "'";
+								
+								PreparedStatement pstmt1 = con.prepareStatement(sql1);
+								pstmt1.setTimestamp(1, timestamp);
+								pstmt1.execute();
 								ResultSet result = st.executeQuery(sql);
 								User user = null;
 								if (result.next()) {
@@ -189,52 +205,153 @@ public class Server extends ServerSocket{
 								} while (result.next());
 								client.close();
 							} else if (chioce == 8) {// updateUser
+								String maker = dis.readUTF();
 								ois = new ObjectInputStream(client.getInputStream());
 								dos = new DataOutputStream(client.getOutputStream());
 								User user = (User) ois.readObject();
+								String made = user.getName();
+								String event = "更改文件信息";
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 								if (!connectToDB)
 									throw new IllegalStateException("Not Connected to Database");
 								String sql = "UPDATE user SET username = '" + user.getName() + "',password = '"
 										+ user.getPassword() + "',role = '" + user.getRole() + "' WHERE username = '"
 										+ user.getName() + "'";
+								String sql1 = "INSERT INTO log(maker,made,event,time) VALUES('"+maker+"','"+made+"','"+event+"',"+"?)";
+								PreparedStatement pstmt1 = con.prepareStatement(sql1);
+								pstmt1.setTimestamp(1, timestamp);
 								try {
 									st.execute(sql);
+									pstmt1.execute();
 									dos.writeBoolean(true);
 								} catch (Exception s) {
 									dos.writeBoolean(false);
 								}
 								client.close();
 							} else if (chioce == 9) {// insertUser
+								String maker = dis.readUTF();
 								ois = new ObjectInputStream(client.getInputStream());
-								dos = new DataOutputStream(client.getOutputStream());
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 								User user = (User) ois.readObject();
+								String made = user.getName();
+								String event = "增加用户";
 								if (!connectToDB)
 									throw new IllegalStateException("Not Connected to Database");
 								String sql = "INSERT INTO user (username,password,role) VALUES ('" + user.getName() + "','"
 										+ user.getPassword() + "','" + user.getRole() + "')";
+								String sql1 = "INSERT INTO log(maker,made,event,time) VALUES('"+maker+"','"+made+"','"+event+"',"+"?)";
+								PreparedStatement pstmt1 = con.prepareStatement(sql1);
+								pstmt1.setTimestamp(1, timestamp);
+								dos = new DataOutputStream(client.getOutputStream());
 								try {
 									st.execute(sql);
+									pstmt1.execute();
 									dos.writeBoolean(true);
 								} catch (Exception e) {
 									dos.writeBoolean(false);
 								}
 								client.close();
 							} else if (chioce == 10) {// deleteUser
+								String maker = dis.readUTF();
 								if (!connectToDB)
 									throw new IllegalStateException("Not Connected to Database");
 								String name = dis.readUTF();
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+								String made = new String(name);
+								String event = "删除用户";
 								dos = new DataOutputStream(client.getOutputStream());
 								String sql = "DELETE FROM user WHERE username = '" + name + "'";
+								String sql1 = "INSERT INTO log(maker,made,event,time) VALUES('"+maker+"','"+made+"','"+event+"',"+"?)";
+								PreparedStatement pstmt1 = con.prepareStatement(sql1);
+								pstmt1.setTimestamp(1, timestamp);
 								try {
 									st.execute(sql);
+									pstmt1.execute();
 									dos.writeBoolean(true);
 								} catch (Exception e) {
 									dos.writeBoolean(false);
 								}
 								client.close();
+							}else if(chioce == 11){//sendMessage
+								if (!connectToDB)
+									throw new IllegalStateException("Not Connected to Database");
+								String url = dis.readUTF();
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+								int m = (int)(10000*Math.random());
+								String con = String.valueOf(m);
+								Sender.sendMail(url,"89",con);
+								dos = new DataOutputStream(client.getOutputStream());
+								dos.writeUTF(con);
+								dos.flush();
+								client.close();
+							}else if(chioce == 12){//deleteDoc
+								String maker = dis.readUTF();
+								String event = "删除文件";
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+								if (!connectToDB)
+									throw new IllegalStateException("Not Connected to Database");
+								String number = dis.readUTF();
+								String owner = dis.readUTF();
+								String filename = null;
+								System.out.println(number+owner);
+								String sql1 = "SELECT * FROM doc WHERE number = '" + number + "'";
+								ResultSet result = st.executeQuery(sql1);
+								result.next();
+								filename = result.getString("filename");
+								System.out.println(filename);
+								String made = new String(filename);
+								File file = new File("C:\\sql\\" + owner+"\\"+filename);
+								file.delete();
+								dos = new DataOutputStream(client.getOutputStream());
+								String sql = "DELETE FROM doc WHERE number = '" + number + "'";
+								String sql2 = "INSERT INTO log(maker,made,event,time) VALUES('"+maker+"','"+made+"','"+event+"',"+"?)";
+								PreparedStatement pstmt1 = con.prepareStatement(sql2);
+								pstmt1.setTimestamp(1, timestamp);
+								try {
+									st.execute(sql);
+									pstmt1.execute();
+									dos.writeBoolean(true);
+								} catch (Exception e) {
+									dos.writeBoolean(false);
+								}
+								client.close();
+							}else if (chioce == 13) {// getLog
+								if (!connectToDB)
+									throw new IllegalStateException("Not Connected to Database");
+								String sql = "SELECT * FROM log";
+								ResultSet result = st.executeQuery(sql);
+								result.last();
+								int number = result.getRow();
+								dos = new DataOutputStream(client.getOutputStream());
+								dos.writeInt(number);
+								result.first();
+								oos = new ObjectOutputStream(client.getOutputStream());
+								do {
+									String maker = result.getString("maker");
+									String made = result.getString("made");
+									String event = result.getString("event");
+									Timestamp time = result.getTimestamp("time");
+									oos.writeObject(new Log(maker, made, event, time));
+									oos.flush();
+								} while (result.next());
+								client.close();
+							}else if (chioce == 14) {// Exit
+								String maker = dis.readUTF();
+								String made = new String(maker);
+								String event = "退出";
+								Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+								String sql1 = "INSERT INTO log(maker,made,event,time) VALUES('"+maker+"','"+made+"','"+event+"',"+"?)";
+								PreparedStatement pstmt1 = con.prepareStatement(sql1);
+								pstmt1.setTimestamp(1, timestamp);
+								try {
+									pstmt1.execute();
+								} catch (Exception e) {
+									System.exit(0);
+								}
 							}
-						
+							
 						}catch(Exception e){
+							e.printStackTrace();
 							System.exit(0);
 						}
 						}

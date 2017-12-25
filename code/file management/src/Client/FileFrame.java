@@ -42,7 +42,10 @@ class Login implements ActionListener, KeyListener {
 	private JButton btn_4; // 添加用户
 	private JButton btn_5; // 用户列表
 	private JButton btn_8; // 上传文件
+	private JButton btn_9;//日志
+	private JButton btn_10;//删除文件
 	private JTable list_ad; //
+	private JTable list_log;
 	private JList li; //
 	private JList li_1; //
 	private JTable li_2; //
@@ -50,9 +53,10 @@ class Login implements ActionListener, KeyListener {
 	private User user;
 	private JLabel labtemp1;
 	static Point origin = new Point();
+	private String pass = null;
 
 	public Login() {
-		ImageIcon icon = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\2.gif");
+		ImageIcon icon = new ImageIcon(".\\icon\\2.gif");
 		JLabel lab = new JLabel(icon);
 		frame = new JFrame();
 		frame.setUndecorated(true);
@@ -68,7 +72,7 @@ class Login implements ActionListener, KeyListener {
 		textField = new JTextField();
 		passwordField = new JPasswordField();
 		button = new JButton("登录");
-		button_1 = new JButton("退出");
+		button_1 = new JButton("注册");
 		JLabel label = new JLabel("用户");
 		JLabel lblNewLabel = new JLabel("密码");
 		textField.setBounds(160, 66, 150, 20);
@@ -87,8 +91,8 @@ class Login implements ActionListener, KeyListener {
 		button_1.addActionListener(this);
 		passwordField.addKeyListener(this);
 		desktopPane.add(button_1);
-		ImageIcon icon_close = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\col.gif");
-		ImageIcon icon_min = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\min.gif");
+		ImageIcon icon_close = new ImageIcon(".\\icon\\col.gif");
+		ImageIcon icon_min = new ImageIcon(".\\icon\\min.gif");
 		JButton button_close = new JButton(icon_close);
 		JButton button_min = new JButton(icon_min);
 		button_close.setBounds(350, 0, 30, 30);
@@ -122,7 +126,7 @@ class Login implements ActionListener, KeyListener {
 	public void res_ad() {
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
-		ImageIcon icon = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\back.png");
+		ImageIcon icon = new ImageIcon(".\\icon\\back.png");
 		JLabel labtemp = new JLabel(icon);
 		labtemp1 = new JLabel();
 		labtemp1.setOpaque(true);
@@ -140,11 +144,11 @@ class Login implements ActionListener, KeyListener {
 		mil5 = new JMenuItem("关于");
 		mil6 = new JMenuItem("退出");
 		btn_3 = new JButton("删除用户");
-		JButton btn_min = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winmin.png"));
+		JButton btn_min = new JButton(new ImageIcon(".\\icon\\winmin.png"));
 		btn_min.setBounds(frame.getWidth() - 80, 0, 30, 20);
-		JButton btn_win = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\win.png"));
+		JButton btn_win = new JButton(new ImageIcon(".\\icon\\win.png"));
 		btn_win.setBounds(frame.getWidth() - 55, 0, 30, 20);
-		JButton btn_close = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winclo.png"));
+		JButton btn_close = new JButton(new ImageIcon(".\\icon\\winclo.png"));
 		btn_close.setBounds(frame.getWidth() - 30, 0, 30, 20);
 		btn_min.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -161,7 +165,6 @@ class Login implements ActionListener, KeyListener {
 				if (frame.getWidth() <= 900) {
 					frame.setLocation(0, 0);
 					frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-					// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} else {
 					frame.setLocation(100, 100);
 					frame.setSize(900, 650);
@@ -188,23 +191,28 @@ class Login implements ActionListener, KeyListener {
 		mainPane.add(btn_min);
 		mainPane.add(btn_win);
 		mainPane.add(btn_close);
-		ImageIcon icon1 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\1.png");
+		ImageIcon icon1 = new ImageIcon(".\\icon\\1.png");
 		btn = new JButton(icon1);
 		btn.setBounds(300, 0, 90, 90);
-		ImageIcon icon2 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.gif");
+		ImageIcon icon2 = new ImageIcon(".\\icon\\3.gif");
 		JLabel lab2 = new JLabel(icon2);
 		lab2.setBounds(5, 0, 30, 30);
-		ImageIcon icon3 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\default.jpg");
+		ImageIcon icon3 = new ImageIcon(".\\icon\\default.jpg");
 		JLabel lab3 = new JLabel(icon3);
 		lab3.setBounds(5, 30, 60, 60);
-		ImageIcon icon4 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.png");
+		ImageIcon icon4 = new ImageIcon(".\\icon\\3.png");
 		btn_1 = new JButton(icon4);
 		btn_1.setBounds(10, 95, 80, 30);
-		btn_8 = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\4.png"));
+		btn_8 = new JButton(new ImageIcon(".\\icon\\4.png"));
 		btn_8.setBounds(100, 95, 80, 30);
-		ImageIcon icon5 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\7.png");
+		btn_10 = new JButton(new ImageIcon(".\\icon\\5.png"));
+		btn_10.setBounds(190, 95, 80, 30);
+		ImageIcon icon5 = new ImageIcon(".\\icon\\7.png");
 		btn_5 = new JButton(icon5);
 		btn_5.setBounds(390, 0, 90, 90);
+		ImageIcon icon11 = new ImageIcon(".\\icon\\11.png");
+		btn_9 = new JButton(icon11);
+		btn_9.setBounds(480, 0, 90, 90);
 		JLabel lab4 = new JLabel(user.getName());
 		lab4.setForeground(Color.WHITE);
 		lab4.setBounds(70, 35, 60, 30);
@@ -227,7 +235,9 @@ class Login implements ActionListener, KeyListener {
 		mainPane.add(mBar);
 		mainPane.add(btn_1);
 		mainPane.add(btn_8);
+		
 		mainPane.add(btn_5);
+		mainPane.add(btn_9);
 		mainPane.add(labtemp);
 		mainPane.add(labtemp1);
 		mil1.addActionListener(this);
@@ -240,12 +250,14 @@ class Login implements ActionListener, KeyListener {
 		btn_1.addActionListener(this);
 		btn_5.addActionListener(this);
 		btn_8.addActionListener(this);
+		
+		btn_9.addActionListener(this);
 	}
 
 	public void res_op() {
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
-		ImageIcon icon = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\back.png");
+		ImageIcon icon = new ImageIcon(".\\icon\\back.png");
 		JLabel labtemp = new JLabel(icon);
 		labtemp1 = new JLabel();
 		labtemp1.setOpaque(true);
@@ -263,11 +275,11 @@ class Login implements ActionListener, KeyListener {
 		mil5 = new JMenuItem("关于");
 		mil6 = new JMenuItem("退出");
 		btn_3 = new JButton("删除用户");
-		JButton btn_min = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winmin.png"));
+		JButton btn_min = new JButton(new ImageIcon(".\\icon\\winmin.png"));
 		btn_min.setBounds(frame.getWidth() - 80, 0, 30, 20);
-		JButton btn_win = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\win.png"));
+		JButton btn_win = new JButton(new ImageIcon(".\\icon\\win.png"));
 		btn_win.setBounds(frame.getWidth() - 55, 0, 30, 20);
-		JButton btn_close = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winclo.png"));
+		JButton btn_close = new JButton(new ImageIcon(".\\icon\\winclo.png"));
 		btn_close.setBounds(frame.getWidth() - 30, 0, 30, 20);
 		btn_min.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -311,19 +323,19 @@ class Login implements ActionListener, KeyListener {
 		mainPane.add(btn_min);
 		mainPane.add(btn_win);
 		mainPane.add(btn_close);
-		ImageIcon icon1 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\1.png");
+		ImageIcon icon1 = new ImageIcon(".\\icon\\1.png");
 		btn = new JButton(icon1);
 		btn.setBounds(300, 0, 90, 90);
-		ImageIcon icon2 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.gif");
+		ImageIcon icon2 = new ImageIcon(".\\icon\\3.gif");
 		JLabel lab2 = new JLabel(icon2);
 		lab2.setBounds(5, 0, 30, 30);
-		ImageIcon icon3 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\default.jpg");
+		ImageIcon icon3 = new ImageIcon(".\\icon\\default.jpg");
 		JLabel lab3 = new JLabel(icon3);
 		lab3.setBounds(5, 30, 60, 60);
-		ImageIcon icon4 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.png");
+		ImageIcon icon4 = new ImageIcon(".\\icon\\3.png");
 		btn_1 = new JButton(icon4);
 		btn_1.setBounds(10, 95, 80, 30);
-		btn_8 = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\4.png"));
+		btn_8 = new JButton(new ImageIcon(".\\icon\\4.png"));
 		btn_8.setBounds(100, 95, 80, 30);
 		JLabel lab4 = new JLabel(user.getName());
 		lab4.setForeground(Color.WHITE);
@@ -362,7 +374,7 @@ class Login implements ActionListener, KeyListener {
 	public void res_br() {
 		mainPane = new JDesktopPane();
 		mainPane.setBackground(new Color(255, 255, 255));
-		ImageIcon icon = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\back.png");
+		ImageIcon icon = new ImageIcon(".\\icon\\back.png");
 		JLabel labtemp = new JLabel(icon);
 		labtemp1 = new JLabel();
 		labtemp1.setOpaque(true);
@@ -380,11 +392,11 @@ class Login implements ActionListener, KeyListener {
 		mil5 = new JMenuItem("关于");
 		mil6 = new JMenuItem("退出");
 		btn_3 = new JButton("删除用户");
-		JButton btn_min = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winmin.png"));
+		JButton btn_min = new JButton(new ImageIcon(".\\icon\\winmin.png"));
 		btn_min.setBounds(frame.getWidth() - 80, 0, 30, 20);
-		JButton btn_win = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\win.png"));
+		JButton btn_win = new JButton(new ImageIcon(".\\icon\\win.png"));
 		btn_win.setBounds(frame.getWidth() - 55, 0, 30, 20);
-		JButton btn_close = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\winclo.png"));
+		JButton btn_close = new JButton(new ImageIcon(".\\icon\\winclo.png"));
 		btn_close.setBounds(frame.getWidth() - 30, 0, 30, 20);
 		btn_min.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -428,16 +440,16 @@ class Login implements ActionListener, KeyListener {
 		mainPane.add(btn_min);
 		mainPane.add(btn_win);
 		mainPane.add(btn_close);
-		ImageIcon icon1 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\1.png");
+		ImageIcon icon1 = new ImageIcon(".\\icon\\1.png");
 		btn = new JButton(icon1);
 		btn.setBounds(300, 0, 90, 90);
-		ImageIcon icon2 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.gif");
+		ImageIcon icon2 = new ImageIcon(".\\icon\\3.gif");
 		JLabel lab2 = new JLabel(icon2);
 		lab2.setBounds(5, 0, 30, 30);
-		ImageIcon icon3 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\default.jpg");
+		ImageIcon icon3 = new ImageIcon(".\\icon\\default.jpg");
 		JLabel lab3 = new JLabel(icon3);
 		lab3.setBounds(5, 30, 60, 60);
-		ImageIcon icon4 = new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\3.png");
+		ImageIcon icon4 = new ImageIcon(".\\icon\\3.png");
 		btn_1 = new JButton(icon4);
 		btn_1.setBounds(10, 95, 80, 30);
 		JLabel lab4 = new JLabel(user.getName());
@@ -535,6 +547,11 @@ class Login implements ActionListener, KeyListener {
 			userframe.add(userPane);
 			userframe.setVisible(true);
 		} else if (e.getSource() == mil2) {
+			try {
+				user.Exit();
+			} catch (IOException e1) {
+				System.exit(0);
+			}
 			frame.remove(mainPane);
 			frame.setBounds(100, 100, 450, 300);
 			if (flag == 2) {
@@ -553,7 +570,13 @@ class Login implements ActionListener, KeyListener {
 		} else if (e.getSource() == mil5) {
 
 		} else if (e.getSource() == mil6) {// 关闭程序
-			System.exit(0);
+			try {
+				user.Exit();
+			} catch (IOException e1) {
+				
+			}finally{
+				System.exit(0);
+			}
 		} else if (e.getSource() == btn) { // 文件列表
 			frame.remove(mainPane);
 			if (flag == 3) {
@@ -563,6 +586,10 @@ class Login implements ActionListener, KeyListener {
 			} else if (flag == 1) {
 				res_br();
 			}
+			btn_10 = new JButton(new ImageIcon(".\\icon\\5.png"));
+			btn_10.setBounds(190, 5, 80, 30);
+			labtemp1.add(btn_10);
+			btn_10.addActionListener(this);
 			Doc[] m = null;
 			try {
 				m = user.showFilelist();
@@ -824,11 +851,11 @@ class Login implements ActionListener, KeyListener {
 			} else if (flag == 1) {
 				res_br();
 			}
-			btn_3 = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\5.png"));
+			btn_3 = new JButton(new ImageIcon(".\\icon\\5.png"));
 			btn_3.setBounds(190, 5, 80, 30);
 			labtemp1.add(btn_3);
 			btn_3.addActionListener(this);
-			btn_4 = new JButton(new ImageIcon("E:\\资料\\java\\Multithreaded-programming\\icon\\10.png"));
+			btn_4 = new JButton(new ImageIcon(".\\icon\\10.png"));
 			btn_4.setBounds(280, 5, 80, 30);
 			labtemp1.add(btn_4);
 			btn_4.addActionListener(this);
@@ -919,6 +946,7 @@ class Login implements ActionListener, KeyListener {
 										tf_01.setText("");
 										tf_02.setText("");
 										file = null;
+										btn.doClick();
 										frame_up.dispose();
 									}
 								} catch (IllegalStateException | SQLException | IOException e1) {
@@ -955,7 +983,7 @@ class Login implements ActionListener, KeyListener {
 						break;
 					}
 					frame.remove(desktopPane);
-					frame.setBounds(100, 100, 900, 650);
+					frame.setBounds(50, 50, 900, 650);
 					textField.setText("");
 					passwordField.setText("");
 					if (flag == 3) {
@@ -968,6 +996,7 @@ class Login implements ActionListener, KeyListener {
 					frame.setResizable(true);
 					frame.add(mainPane);
 					frame.validate();
+					btn.doClick();
 				} else {
 					JLabel label = new JLabel("用户名或者密码错误!");
 					label.setForeground(Color.red);
@@ -986,7 +1015,141 @@ class Login implements ActionListener, KeyListener {
 				System.exit(0);
 			}
 		} else if (e.getSource() == button_1) {
-			System.exit(0);
+			JFrame jt = new JFrame();
+			JDesktopPane d1 = new JDesktopPane();
+			jt.setBounds(90, 90, 400, 300);
+			jt.add(d1);
+			JLabel l1 = new JLabel("用户");
+			JLabel l2 = new JLabel("密码");
+			JLabel l3 = new JLabel("邮箱");
+			JLabel l4 = new JLabel("验证码");
+			l1.setBounds(40, 20, 40, 25);
+			l2.setBounds(40, 50, 40, 25);
+			l3.setBounds(40, 80, 40, 25);
+			l4.setBounds(40, 110, 40, 25);
+			d1.add(l1);
+			d1.add(l2);
+			d1.add(l3);
+			d1.add(l4);
+			JTextField t1 = new JTextField();
+			JTextField t2 = new JTextField();
+			JTextField t3 = new JTextField();
+			JTextField t4 = new JTextField();
+			t1.setBounds(100, 20, 150, 25);
+			t2.setBounds(100, 50, 150, 25);
+			t3.setBounds(100, 80, 150, 25);
+			t4.setBounds(100, 110, 150, 25);
+			d1.add(t1);
+			d1.add(t2);
+			d1.add(t3);
+			d1.add(t4);
+			JButton b1 = new JButton("获取");
+			b1.setBounds(270, 80, 70, 25);
+			d1.add(b1);
+			JButton b2 = new JButton("确定");
+			b2.setBounds(50, 160, 80, 25);
+			d1.add(b2);
+			JButton b3 = new JButton("取消");
+			b3.setBounds(170, 160, 80, 25);
+			d1.add(b3);
+			jt.setVisible(true);
+			b1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						String name = t1.getText();
+						String password = t2.getText();
+						String url = t3.getText();
+						System.out.println(name);
+						System.out.println(password);
+						System.out.println(url);
+						if (!name.equals("") && !password.equals("") && !url.equals(""))
+							pass = DataProcessing.sendMessage(url);
+					} catch (IOException e) {
+						System.exit(0);
+					}
+				}
+			});
+			b2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						String name = t1.getText();
+						String password = t2.getText();
+						String url = t3.getText();
+						String pass1 = t4.getText();
+						if (!name.equals("") && !password.equals("") && !url.equals("") && !pass1.equals("")
+								&& pass.equals(pass1)) {
+							DataProcessing.insertUser(name, password, "browser",user.getName());
+						}
+					} catch (IllegalStateException | SQLException | IOException e1) {
+						System.exit(0);
+					}
+				}
+			});
+
+			b3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					jt.remove(d1);
+					jt.setVisible(false);
+					jt.dispose();
+				}
+			});
+		}else if (e.getSource() == btn_10) {//删除文件
+			frame.remove(mainPane);
+			if (flag == 2) {
+				res_ad();
+			} else if (flag == 1) {
+				res_op();
+			} else if (flag == 0) {
+				res_br();
+			}
+			if (list_ad.getSelectedRow() != -1) {
+				String n = (String) list_ad.getValueAt(list_ad.getSelectedRow(), 0);
+				String o = (String) list_ad.getValueAt(list_ad.getSelectedRow(), 1);
+				System.out.println(n+o);
+				try {
+					if (user.deDoc(n,o)) {
+						list_ad.clearSelection();
+						btn.doClick();
+					} else {
+						list_ad.clearSelection();
+					}
+				} catch (IllegalStateException | SQLException | IOException s) {
+					s.printStackTrace();
+				}
+			}
+			frame.add(mainPane);
+			frame.validate();
+		}else if (e.getSource() == btn_9) {//日志
+			frame.remove(mainPane);
+			if (flag == 3) {
+				res_ad();
+			} else if (flag == 2) {
+				res_op();
+			} else if (flag == 1) {
+				res_br();
+			}
+			Log[] m = null;
+			try {
+				m = user.listLog();
+				String[] column = { "操作者", "操作对象", "事件", "时间"};
+				Object[][] data = new Object[m.length][4];
+				for (int i = 0; i < m.length; i++) {
+					data[i][0] = m[i].getMaker();
+					data[i][1] = m[i].getMade();
+					data[i][2] = m[i].getEvent();
+					data[i][3] = m[i].getTime();
+				}
+				list_log = new JTable(data, column);
+			} catch (IllegalStateException | SQLException | IOException e1) {
+				e1.printStackTrace();
+			}
+			list_log.setBounds(150, 150, frame.getWidth() - 200 - 20, m.length * 20);
+			JScrollPane scrollPane = new JScrollPane(list_log);
+			scrollPane.getViewport().setBackground(Color.WHITE);
+			scrollPane.setBounds(0, 130, frame.getWidth(), frame.getHeight() - 130);
+			mainPane.add(scrollPane);
+			frame.add(mainPane);
+			frame.validate();
 		}
 	}
 

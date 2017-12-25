@@ -20,7 +20,7 @@ public class Operator extends User {
 		DataOutputStream dos = null;
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		File fin = new File(file);
-		if (DataProcessing.insertDoc(ID, getName(), timestamp, description, fin.getName())) {
+		if (DataProcessing.insertDoc(ID, getName(), timestamp, description, fin.getName(),getName())) {
 			try {
 				try {
 					client = new Socket(SERVER_IP, SERVER_PORT);

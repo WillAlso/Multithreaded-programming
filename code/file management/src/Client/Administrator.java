@@ -10,7 +10,7 @@ public class Administrator extends User{
 		setRole(role);
 	}
 	public boolean changeUserInfo(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException, IOException {
-		if(DataProcessing.updateUser(userName, userPassword, userRole)) {
+		if(DataProcessing.updateUser(userName, userPassword, userRole,getName())) {
 			System.out.println(userName +" 信息更新成功 !");
 			return true;
 		}
@@ -19,19 +19,19 @@ public class Administrator extends User{
 			return false;
 		}
 	}
-	public boolean deUser(String userName) throws IllegalStateException, SQLException, IOException {
-			if(DataProcessing.deleteUser(userName)) {
-				System.out.println(userName +"删除成功");
+	public boolean deUser(String filename) throws IllegalStateException, SQLException, IOException {
+			if(DataProcessing.deleteUser(filename,getName())) {
+				System.out.println(filename +"删除成功");
 				return true;
 			}
 			else {
-				System.out.println(userName + "删除失败!");
+				System.out.println(filename + "删除失败!");
 				return false;
 			}
 	}
 	public boolean addUser(String userName,String userPassword,String userRole) throws IllegalStateException, SQLException, UnknownHostException, IOException {
 		
-		if(DataProcessing.insertUser(userName, userPassword, userRole)) {
+		if(DataProcessing.insertUser(userName, userPassword, userRole,getName())) {
 			System.out.println(userName + "添加成功!");
 			return true;
 		}

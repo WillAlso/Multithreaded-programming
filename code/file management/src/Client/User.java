@@ -30,7 +30,16 @@ public class User implements Serializable {
 	public boolean deUser(String userName) throws IllegalStateException, SQLException, IOException {
 		return false;
 	}
-
+	public boolean deDoc(String filename,String owner) throws IllegalStateException, SQLException, IOException {
+		if(DataProcessing.deleteDoc(filename,getName(),owner)) {
+			System.out.println(filename +"删除成功");
+			return true;
+		}
+		else {
+			System.out.println(filename + "删除失败!");
+			return false;
+		}
+	}
 	public Doc[] showFilelist() throws IllegalStateException, SQLException, IOException {
 		return DataProcessing.getAllDocs();
 	}
@@ -92,7 +101,7 @@ public class User implements Serializable {
 			System.out.println("密码错误!");
 			return false;
 		}
-		if (DataProcessing.updateUser(userName, userPassword_1, getRole())) {
+		if (DataProcessing.updateUser(userName, userPassword_1, getRole(),getName())) {
 			System.out.println(userName + " 信息更新成功 !");
 			return true;
 		} else {
@@ -132,9 +141,14 @@ public class User implements Serializable {
 	public User[] listUser() throws IllegalStateException, SQLException, UnknownHostException, IOException {
 		return null;
 	}
-
+	public Log[] listLog() throws IllegalStateException, SQLException, UnknownHostException, IOException {
+		return DataProcessing.getLog();
+	}
 	public boolean addUser(String name2, String pass, String role2)
 			throws IllegalStateException, SQLException, UnknownHostException, IOException {
 		return false;
+	}
+	public void Exit() throws IOException{
+		DataProcessing.userExit(getName());
 	}
 }
