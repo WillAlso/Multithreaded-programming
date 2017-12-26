@@ -1078,7 +1078,7 @@ class Login implements ActionListener, KeyListener {
 						String pass1 = t4.getText();
 						if (!name.equals("") && !password.equals("") && !url.equals("") && !pass1.equals("")
 								&& pass.equals(pass1)) {
-							DataProcessing.insertUser(name, password, "browser",user.getName());
+							DataProcessing.insertUser(name, password, "browser",name);
 						}
 					} catch (IllegalStateException | SQLException | IOException e1) {
 						System.exit(0);
