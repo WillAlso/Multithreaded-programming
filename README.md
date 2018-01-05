@@ -1,5 +1,5 @@
 # Multithreaded programming
-#＃　文件说明
+## 文件说明
 - master 最终文件
 - first 第一次实验+第三次实验本地操作(非要求)
 - second 第二次实验：异常处理
