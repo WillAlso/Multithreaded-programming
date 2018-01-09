@@ -6,11 +6,9 @@ import java.sql.*;
 import Client.*;
 
 public class Server extends ServerSocket{
-
 	private static Connection con;
 	private static Statement st;
 	private static boolean connectToDB = false;
-
 	private static final int PORT = 2017;
 	private ServerSocket server;
 	private Socket client;
@@ -45,14 +43,13 @@ public class Server extends ServerSocket{
 							try{
 							dis = new DataInputStream(client.getInputStream());
 							int chioce = dis.readInt();
-							System.out.println(chioce);
 							if (chioce == 1) {// 服务器接收文件
 								String fileName = dis.readUTF();
 								String folderutf = dis.readUTF();
-								File folder = new File("C:\\sql\\" + folderutf);
+								File folder = new File(".\\file\\" + folderutf);
 								if (!folder.exists())
 									folder.mkdirs();
-								fos = new FileOutputStream(new File("C:\\sql\\" + folderutf + "\\" + fileName));
+								fos = new FileOutputStream(new File(".\\file\\" + folderutf + "\\" + fileName));
 								byte[] sendBytes = new byte[1024];
 								while (true) {
 									int read = 0;
@@ -68,9 +65,9 @@ public class Server extends ServerSocket{
 								dos = new DataOutputStream(client.getOutputStream());
 								String fileName = dis.readUTF();
 								String folderutf = dis.readUTF();
-								File temp = new File("C:\\sql\\" + folderutf + "\\" + fileName);
+								File temp = new File(".\\file\\" + folderutf + "\\" + fileName);
 								fis = new FileInputStream(temp);
-								System.out.println(new File("C:\\sql\\" + folderutf + "\\" + fileName).getAbsolutePath());
+								System.out.println(new File(".\\file\\" + folderutf + "\\" + fileName).getAbsolutePath());
 								byte[] sendBytes = new byte[1024];
 								int length = 0;
 								while ((length = fis.read(sendBytes, 0, sendBytes.length)) > 0) {
