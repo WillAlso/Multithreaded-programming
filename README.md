@@ -15,6 +15,7 @@
 >password密码(char)
 >
 >role角色(char)
+>
 ###2.doc表
 >id编号(int)
 >
@@ -27,6 +28,7 @@
 >description描述(char)
 >
 >filename文件名(char)
+>
 ###3.log表
 >id编号(int)
 >maker事件发出者(char)
